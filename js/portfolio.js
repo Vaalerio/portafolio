@@ -11,32 +11,63 @@ const Portfolio = {
   render() {
     const container = document.getElementById("weeksPublicGrid");
     const weeks = Data.getAllWeeks();
-    container.innerHTML = weeks.map((item, i) => this._renderCard(item, i)).join("");
+    container.innerHTML = weeks
+      .map((item, i) => this._renderCard(item, i))
+      .join("");
+  },
+
+
+  // Genera el placeholder visual reutilizado en tarjetas vacías y con fallback.
+  // En este proyecto, siempre muestra la marca personal.
+  _getPlaceholder() {
+    return `
+      <div class="pub-week-thumb-placeholder">
+        <img
+          src="assets/images/icono_logo_personal_1920x1080.png"
+          alt="Logo"
+          style="max-width:100%; max-height:100%; object-fit:contain; display:block;"
+        >
+      </div>
+    `;
   },
 
   _renderCard(item, index) {
     const isEmpty = !item.title || !item.title.trim();
     const weekStr = String(item.week).padStart(2, "0");
+    // Aplicamos el delay para stagger las tarjetas
     // Stagger animation: cada tarjeta entra con un pequeño delay
     const delay = index * 50;
 
+    // Caso: semana sin contenido
     if (isEmpty) {
       return `
         <div class="pub-week-card pub-week-card--empty" style="--card-delay:${delay}ms">
-          <img src="assets/images/icono_logo_personal_1920x1080.png" alt="Logo">
+          ${this._getPlaceholder()}
           <div class="footer-accent"></div>
           <div class="pub-week-body">
             <span class="pub-week-label">Semana ${weekStr}</span>
-            <span class="pub-week-title" style="color:var(--color-faint); font-style:italic;">Próximamente…</span>
+            <span class="pub-week-title" style="color:var(--color-faint); font-style:italic;">
+              Próximamente…
+            </span>
           </div>
         </div>
       `;
     }
 
-    // Imagen con wrapper para zoom on hover
+    // Caso: semana con contenido
+    // Si no existe imagen, se reutiliza el placeholder de marca.
     const thumbHTML = item.image
-      ? `<div class="pub-week-thumb-wrap"><img class="pub-week-thumb" src="${item.image}" alt="${item.title}" loading="lazy" onerror="this.parentElement.outerHTML='<div class=\\'pub-week-thumb-placeholder\\'>📘</div>'"></div>`
-      : `<div class="pub-week-thumb-placeholder">📘</div>`;
+      ? `
+        <div class="pub-week-thumb-wrap">
+          <img
+            class="pub-week-thumb"
+            src="${item.image}"
+            alt="${item.title}"
+            loading="lazy"
+          >
+        </div>
+      `
+      : this._getPlaceholder();
 
     // Resumen truncado a ~15 palabras
     const summary = this._truncateWords(item.summary || item.description, 15);
