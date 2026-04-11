@@ -5,7 +5,7 @@
  * Maneja autenticación, navegación y estado de sesión.
  *
  * ── Credenciales ────────────────────────────────────
- *    Admin:    admin / 12345
+ *    Admin:    admin / 987admin
  *    Usuarios: raul / raul123
  *              valerio / valerio123
  *              ivan / ivan123
