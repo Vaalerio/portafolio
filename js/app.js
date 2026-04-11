@@ -17,7 +17,7 @@
  */
 
 const USERS = [
-  { user: "admin",    pass: "12345",      role: "admin" },
+  { user: "admin",    pass: "987admin",      role: "admin" },
   { user: "raul",     pass: "raul123",    role: "user"  },
   { user: "valerio",  pass: "valerio123", role: "user"  },
   { user: "ivan",     pass: "ivan123",    role: "user"  },
