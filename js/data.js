@@ -20,10 +20,10 @@
  */
 
 const UNITS_CONFIG = [
-  { num: 1, name: "Unidad 1 — Fundamentos",        color: "var(--unit1)", weeks: [1, 2, 3, 4]   },
-  { num: 2, name: "Unidad 2 — Patrones",            color: "var(--unit2)", weeks: [5, 6, 7, 8]   },
-  { num: 3, name: "Unidad 3 — Diseño",              color: "var(--unit3)", weeks: [9, 10, 11, 12] },
-  { num: 4, name: "Unidad 4 — Proyecto Final",      color: "var(--unit4)", weeks: [13, 14, 15, 16] },
+  { num: 1, name: "Unidad 1 — Fundamentos", color: "var(--unit1)", weeks: [1, 2, 3, 4] },
+  { num: 2, name: "Unidad 2 — Patrones", color: "var(--unit2)", weeks: [5, 6, 7, 8] },
+  { num: 3, name: "Unidad 3 — Diseño", color: "var(--unit3)", weeks: [9, 10, 11, 12] },
+  { num: 4, name: "Unidad 4 — Proyecto Final", color: "var(--unit4)", weeks: [13, 14, 15, 16] },
 ];
 
 /**
@@ -44,23 +44,15 @@ const INITIAL_DATA = [
     file: "Sem01_Arquitectura_de_Software_Resumen.pdf",
     link: ""
   },
-  {
-    unit: 1, week: 2,
-    title: "Semana 02 - Atributos de Calidad",
-    summary: "Escalabilidad, disponibilidad, mantenibilidad y rendimiento como guías de decisión arquitectónica.",
-    description: "Escalabilidad, disponibilidad, mantenibilidad y rendimiento. Cómo los atributos de calidad guían las decisiones arquitectónicas.",
-    image: "",
-    file: "",
-    link: ""
-  },
+
   // ── Semanas vacías — edítalas conforme avance el curso ──
-  { unit: 1, week: 3,  title: "", summary: "", description: "", image: "", file: "", link: "" },
-  { unit: 1, week: 4,  title: "", summary: "", description: "", image: "", file: "", link: "" },
-  { unit: 2, week: 5,  title: "", summary: "", description: "", image: "", file: "", link: "" },
-  { unit: 2, week: 6,  title: "", summary: "", description: "", image: "", file: "", link: "" },
-  { unit: 2, week: 7,  title: "", summary: "", description: "", image: "", file: "", link: "" },
-  { unit: 2, week: 8,  title: "", summary: "", description: "", image: "", file: "", link: "" },
-  { unit: 3, week: 9,  title: "", summary: "", description: "", image: "", file: "", link: "" },
+  { unit: 1, week: 3, title: "", summary: "", description: "", image: "", file: "", link: "" },
+  { unit: 1, week: 4, title: "", summary: "", description: "", image: "", file: "", link: "" },
+  { unit: 2, week: 5, title: "", summary: "", description: "", image: "", file: "", link: "" },
+  { unit: 2, week: 6, title: "", summary: "", description: "", image: "", file: "", link: "" },
+  { unit: 2, week: 7, title: "", summary: "", description: "", image: "", file: "", link: "" },
+  { unit: 2, week: 8, title: "", summary: "", description: "", image: "", file: "", link: "" },
+  { unit: 3, week: 9, title: "", summary: "", description: "", image: "", file: "", link: "" },
   { unit: 3, week: 10, title: "", summary: "", description: "", image: "", file: "", link: "" },
   { unit: 3, week: 11, title: "", summary: "", description: "", image: "", file: "", link: "" },
   { unit: 3, week: 12, title: "", summary: "", description: "", image: "", file: "", link: "" },
@@ -79,7 +71,7 @@ const Data = {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) return JSON.parse(stored);
-    } catch (e) {}
+    } catch (e) { }
     // Primera carga: usar INITIAL_DATA como semilla
     const map = {};
     INITIAL_DATA.forEach(item => { map[item.week] = item; });
