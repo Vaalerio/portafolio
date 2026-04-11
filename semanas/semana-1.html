@@ -27,17 +27,35 @@
 </head>
 
 <body>
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem("arqsw_theme") === "dark") document.body.classList.add("dark");
+      } catch (e) {}
+    })();
+  </script>
+
 
   <!-- HEADER -->
   <header class="site-header">
     <div class="header-inner">
       <a href="../index.html" class="header-logo-link">
-        <img src="../assets/images/logo_universidad.png" alt="Logo Universidad" class="header-logo-img" />
+        <img src="../assets/images/logo_universidad.png" alt="Logo Universidad" class="header-logo-img" data-src-light="../assets/images/logo_universidad.png" data-src-dark="../assets/images/logo_universidad_blanco.png" />
       </a>
       <div class="header-center">
         <span class="header-portafolio-title">PORTAFOLIO</span>
       </div>
-      <div style="width:120px;"></div>
+      <div class="header-right">
+        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar a tema oscuro" title="Tema oscuro">
+          <svg class="theme-toggle__icon theme-toggle__icon--moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--sun hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -119,6 +137,7 @@
     </div>
   </footer>
 
+  <script src="../js/theme.js"></script>
 </body>
 
 </html>
