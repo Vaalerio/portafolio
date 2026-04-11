@@ -60,4 +60,68 @@
 
   /* Transiciones */
   --transition: .2s ease;
+
+  /* Header (glass) — tokens para tema claro */
+  --header-bg: rgba(250, 249, 245, 0.85);
+  --header-bg-scrolled: rgba(250, 249, 245, 0.95);
+
+  /* Footer — hereda del tema (claro: superficie clara + texto oscuro) */
+  --footer-bg: var(--color-surface2);
+  --footer-fg: var(--color-text);
+  --footer-muted: var(--color-muted);
+  --footer-link: var(--color-muted);
+  --footer-link-border: var(--color-border-lt);
+  --footer-social-bg: var(--color-surface);
+  --footer-social-border: var(--color-border);
+  --footer-social-fg: var(--color-muted);
+  --footer-divider: var(--color-border-lt);
+  --footer-copyright: var(--color-faint);
+  --footer-social-shadow: var(--shadow-md);
+  --footer-on-accent: var(--color-bg);
+}
+
+/* ─── Tema oscuro ─────────────────────────────────────────── */
+body.dark {
+  --color-bg: #1c1b18;
+  --color-surface: #252420;
+  --color-surface2: #2e2c27;
+  --color-border: #3d3a34;
+  --color-border-lt: #35322d;
+
+  --color-text: #f2f0ea;
+  --color-muted: #9c988c;
+  --color-faint: #6b675e;
+
+  --color-accent: #e8957a;
+  --color-accent-lt: #3d2e28;
+  --color-accent-dk: #f0a88a;
+
+  --color-blue: #8ab4e8;
+  --color-blue-lt: #2a3444;
+
+  --color-green: #9db88a;
+  --color-green-lt: #2d3428;
+
+  --unit4: #f2f0ea;
+
+  --header-bg: rgba(28, 27, 24, 0.88);
+  --header-bg-scrolled: rgba(28, 27, 24, 0.95);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  /* Footer — misma lógica semántica (oscuro: superficie + texto del tema) */
+  --footer-bg: var(--color-surface2);
+  --footer-fg: var(--color-text);
+  --footer-muted: var(--color-muted);
+  --footer-link: var(--color-muted);
+  --footer-link-border: var(--color-border);
+  --footer-social-bg: var(--color-surface);
+  --footer-social-border: var(--color-border-lt);
+  --footer-social-fg: var(--color-muted);
+  --footer-divider: var(--color-border-lt);
+  --footer-copyright: var(--color-faint);
+  --footer-social-shadow: var(--shadow-md);
+  --footer-on-accent: var(--footer-fg);
 }

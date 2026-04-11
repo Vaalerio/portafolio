@@ -28,6 +28,13 @@
 </head>
 
 <body>
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem("arqsw_theme") === "dark") document.body.classList.add("dark");
+      } catch (e) {}
+    })();
+  </script>
 
   <!-- ════════════════════════════════════════════════════
        HEADER
@@ -39,7 +46,7 @@
     <div class="header-inner">
       <!-- Izquierda: Logo universidad (lleva al home) -->
       <a href="index.html" class="header-logo-link" id="logoHome">
-        <img src="assets/images/logo_universidad.png" alt="Logo Universidad" class="header-logo-img" />
+        <img src="assets/images/logo_universidad.png" alt="Logo Universidad" class="header-logo-img" data-src-light="assets/images/logo_universidad.png" data-src-dark="assets/images/logo_universidad_blanco.png" />
       </a>
 
       <!-- Centro: Título + subtítulo -->
@@ -48,18 +55,29 @@
         <span class="header-subtitle">Arquitectura de Software</span>
       </div>
 
-      <!-- Derecha: Login / Logout -->
-      <nav class="header-nav" id="headerNav">
-        <button class="nav-link nav-admin hidden" id="btnAdmin">
-          <i class="fa-solid fa-gear"></i> Admin
+      <!-- Derecha: tema + Login / Logout -->
+      <div class="header-right">
+        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar a tema oscuro" title="Tema oscuro">
+          <svg class="theme-toggle__icon theme-toggle__icon--moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--sun hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+          </svg>
         </button>
-        <button class="nav-link nav-cta" id="btnLogin">
-          <i class="fa-solid fa-right-to-bracket"></i> Iniciar sesión
-        </button>
-        <button class="nav-link nav-logout hidden" id="btnLogout">
-          <i class="fa-solid fa-arrow-right-from-bracket"></i> Salir
-        </button>
-      </nav>
+        <nav class="header-nav" id="headerNav">
+          <button class="nav-link nav-admin hidden" id="btnAdmin">
+            <i class="fa-solid fa-gear"></i> Admin
+          </button>
+          <button class="nav-link nav-cta" id="btnLogin">
+            <i class="fa-solid fa-right-to-bracket"></i> Iniciar sesión
+          </button>
+          <button class="nav-link nav-logout hidden" id="btnLogout">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Salir
+          </button>
+        </nav>
+      </div>
     </div>
   </header>
 
@@ -87,9 +105,9 @@
       <div class="login-box">
         <!-- Logos centrados -->
         <div class="login-logos">
-          <img src="assets/images/logo_transparente.png" alt="Logo Universidad" class="login-logo" />
+          <img src="assets/images/logo_transparente.png" alt="Logo Universidad" class="login-logo" data-src-light="assets/images/logo_transparente.png" data-src-dark="assets/images/logo_transparente_blanco.png" />
           <span class="login-collab-icon">×</span>
-          <img src="assets/images/logo_personal_fondo_transparente.png" alt="Logo Personal" class="login-logo" />
+          <img src="assets/images/logo_personal_fondo_transparente.png" alt="Logo Personal" class="login-logo" data-src-light="assets/images/logo_personal_fondo_transparente.png" data-src-dark="assets/images/logo_personal_fondo_transparente_blanco.png" />
         </div>
 
         <h2 class="login-title">Iniciar sesión</h2>
@@ -241,6 +259,7 @@
   <div class="toast" id="toast">✓ Guardado correctamente</div>
 
   <!-- SCRIPTS -->
+  <script src="js/theme.js"></script>
   <script src="js/data.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/admin.js"></script>

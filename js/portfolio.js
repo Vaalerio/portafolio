@@ -14,6 +14,9 @@ const Portfolio = {
     container.innerHTML = weeks
       .map((item, i) => this._renderCard(item, i))
       .join("");
+    if (typeof Theme !== "undefined" && Theme.syncThemedImages) {
+      Theme.syncThemedImages();
+    }
   },
 
 
@@ -25,6 +28,8 @@ const Portfolio = {
         <img
           src="assets/images/icono_logo_personal_1920x1080.png"
           alt="Logo"
+          data-src-light="assets/images/icono_logo_personal_1920x1080.png"
+          data-src-dark="assets/images/icono_logo_personal_1920x1080_blanco.png"
           style="max-width:100%; max-height:100%; object-fit:contain; display:block;"
         >
       </div>
