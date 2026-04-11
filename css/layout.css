@@ -1,14 +1,20 @@
 /* ─── LAYOUT ──────────────────────────────────────── */
 
+/* Color de página en html para que el canvas Three.js (body transparente) se vea */
+html {
+  background: var(--color-bg);
+  transition: background-color .25s ease;
+}
+
 body {
   font-family: var(--font-body);
-  background: var(--color-bg);
+  background: transparent;
   color: var(--color-text);
   line-height: 1.6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  transition: background-color .25s ease, color .25s ease;
+  transition: color .25s ease;
 }
 
 /* ══════════════════════════════════════════════════════
@@ -176,6 +182,8 @@ body.dark .site-header.scrolled {
    MAIN
    ══════════════════════════════════════════════════════ */
 .site-main {
+  position: relative;
+  z-index: 1;
   flex: 1;
   max-width: 1200px;
   width: 100%;
@@ -194,6 +202,7 @@ body.dark .site-header.scrolled {
   background: var(--footer-bg);
   color: var(--footer-fg);
   position: relative;
+  z-index: 1;
   overflow: hidden;
   transition: background-color .25s ease, color .25s ease;
 }

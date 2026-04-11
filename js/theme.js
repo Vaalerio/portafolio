@@ -15,6 +15,7 @@ const Theme = {
     }
     this._syncButton();
     this.syncThemedImages();
+    this._notifyThreeBg();
     const btn = document.getElementById("themeToggle");
     if (btn) {
       btn.addEventListener("click", () => this.toggle());
@@ -31,6 +32,16 @@ const Theme = {
     }
     this._syncButton();
     this.syncThemedImages();
+    this._notifyThreeBg();
+  },
+
+  _notifyThreeBg() {
+    if (
+      window.__threeBgApi &&
+      typeof window.__threeBgApi.updateTheme === "function"
+    ) {
+      window.__threeBgApi.updateTheme();
+    }
   },
 
   /** Imágenes con data-src-light / data-src-dark (logos según tema) */

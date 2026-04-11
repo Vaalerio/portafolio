@@ -1,0 +1,12 @@
+/* Fondo Three.js — fijo, detrás del contenido, sin interceptar eventos */
+#three-bg.three-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+#three-bg.three-bg canvas {
+  display: block;
+}
