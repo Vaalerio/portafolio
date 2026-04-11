@@ -1,0 +1,149 @@
+/* ─── COMPONENTS ───────────────────────────────────── */
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-family: var(--font-body);
+  font-size: .9rem;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: background .25s ease, transform .2s ease, box-shadow .25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,.12);
+  transform: translateX(-100%);
+  transition: transform .4s ease;
+}
+
+.btn-primary:hover::after {
+  transform: translateX(0);
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-dk);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(217,119,87,.25);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-full { width: 100%; }
+
+/* ── Form fields ── */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.field-label {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  color: var(--color-muted);
+  text-transform: uppercase;
+}
+
+.field-input {
+  background: var(--color-surface2);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  font-size: .9rem;
+  outline: none;
+  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  width: 100%;
+}
+
+.field-input:focus {
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+  box-shadow: 0 0 0 3px var(--color-accent-lt);
+}
+
+.field-textarea {
+  background: var(--color-surface2);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  font-size: .9rem;
+  outline: none;
+  resize: vertical;
+  width: 100%;
+  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+.field-textarea:focus {
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+  box-shadow: 0 0 0 3px var(--color-accent-lt);
+}
+
+.field-hint {
+  font-size: .72rem;
+  color: var(--color-faint);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+/* ── Card base ── */
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  color: var(--color-text);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--color-border-lt);
+}
+
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  background: var(--color-text);
+  color: var(--color-bg);
+  padding: 14px 24px;
+  border-radius: var(--radius-md);
+  font-size: .875rem;
+  font-weight: 500;
+  z-index: 999;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .35s ease;
+  pointer-events: none;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}

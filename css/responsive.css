@@ -1,0 +1,77 @@
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .weeks-public-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .header-inner { padding: 0 var(--space-lg); }
+  .site-main    { padding: 0 var(--space-lg); }
+
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-side { position: static; }
+
+  .weeks-public-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: var(--space-lg);
+  }
+
+  .footer-col--social {
+    justify-content: center;
+  }
+
+  .footer-social-row {
+    justify-content: center;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .header-inner {
+    padding: 0 var(--space-md);
+    height: 56px;
+  }
+
+  .header-portafolio-title {
+    font-size: 1rem;
+    letter-spacing: .1em;
+  }
+
+  .header-subtitle {
+    display: none;
+  }
+
+  .header-logo-img {
+    height: 30px;
+  }
+
+  /* En móvil: sólo mostrar el ícono del botón */
+  .nav-cta span,
+  .nav-logout span,
+  .nav-admin span { display: none; }
+
+  .nav-link { padding: 8px 12px; }
+
+  .site-main { padding: 0 var(--space-md); }
+
+  .weeks-public-grid { grid-template-columns: 1fr; }
+
+  .field-row { grid-template-columns: 1fr; }
+
+  .login-box { padding: var(--space-lg); }
+
+  .login-logo { height: 48px; }
+
+  .toast { left: var(--space-md); right: var(--space-md); bottom: var(--space-lg); }
+}

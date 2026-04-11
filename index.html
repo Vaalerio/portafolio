@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portafolio · Arquitectura de Software</title>
+  <meta name="description"
+    content="Portafolio académico de Arquitectura de Software — Valerio Mosquera Zevallos, UPLA 2026." />
+
+  <!-- Google Fonts: Cormorant Garamond (display) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <!-- Font Awesome (iconos de redes) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/portfolio.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════════════════
+       HEADER
+       ════════════════════════════════════════════════════ -->
+  <header class="site-header" id="siteHeader">
+    <!-- Línea decorativa gradiente (como el footer) -->
+    <div class="header-accent"></div>
+
+    <div class="header-inner">
+      <!-- Izquierda: Logo universidad (lleva al home) -->
+      <a href="index.html" class="header-logo-link" id="logoHome">
+        <img src="assets/images/logo_universidad.png" alt="Logo Universidad" class="header-logo-img" />
+      </a>
+
+      <!-- Centro: Título + subtítulo -->
+      <div class="header-center">
+        <span class="header-portafolio-title">PORTAFOLIO</span>
+        <span class="header-subtitle">Arquitectura de Software</span>
+      </div>
+
+      <!-- Derecha: Login / Logout -->
+      <nav class="header-nav" id="headerNav">
+        <button class="nav-link nav-admin hidden" id="btnAdmin">
+          <i class="fa-solid fa-gear"></i> Admin
+        </button>
+        <button class="nav-link nav-cta" id="btnLogin">
+          <i class="fa-solid fa-right-to-bracket"></i> Iniciar sesión
+        </button>
+        <button class="nav-link nav-logout hidden" id="btnLogout">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Salir
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════
+       MAIN CONTENT
+       ════════════════════════════════════════════════════ -->
+  <main class="site-main">
+
+    <!-- ── HOME: Cuadrícula pública de semanas ─────────── -->
+    <section id="homeSection" class="section section--home">
+      <div class="home-hero">
+        <h1 class="home-title">Arquitectura<br><em>de Software</em></h1>
+        <p class="home-desc">
+          Portafolio académico de 16 semanas organizado en 4 unidades.<br>
+          Documentación semanal, archivos y reflexiones del curso — 2026.
+        </p>
+      </div>
+      <div class="weeks-public-grid" id="weeksPublicGrid">
+        <!-- JS renderiza aquí las 16 tarjetas -->
+      </div>
+    </section>
+
+    <!-- ── LOGIN ──────────────────────────────────────── -->
+    <section id="loginSection" class="section section--login hidden">
+      <div class="login-box">
+        <!-- Logos centrados -->
+        <div class="login-logos">
+          <img src="assets/images/logo_transparente.png" alt="Logo Universidad" class="login-logo" />
+          <span class="login-collab-icon">×</span>
+          <img src="assets/images/logo_personal_fondo_transparente.png" alt="Logo Personal" class="login-logo" />
+        </div>
+
+        <h2 class="login-title">Iniciar sesión</h2>
+
+        <div class="field-group">
+          <label class="field-label">Usuario</label>
+          <input class="field-input" type="text" id="inputUser" placeholder="Tu usuario" />
+        </div>
+        <div class="field-group" id="passGroup">
+          <label class="field-label">Contraseña</label>
+          <input class="field-input" type="password" id="inputPass" placeholder="••••••" />
+        </div>
+
+        <button class="btn-primary btn-full" id="loginBtn">Ingresar</button>
+      </div>
+    </section>
+
+    <!-- ── ADMIN ──────────────────────────────────────── -->
+    <section id="adminSection" class="section section--admin hidden">
+      <div class="admin-header">
+        <h2 class="admin-title">Panel de administrador</h2>
+        <p class="admin-sub">Agrega o actualiza el contenido semanal</p>
+      </div>
+
+      <div class="admin-grid">
+
+        <!-- Formulario -->
+        <div class="admin-form-card">
+          <h3 class="card-title">Nueva entrada</h3>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label class="field-label">Unidad</label>
+              <select class="field-input" id="aUnit">
+                <option value="1">Unidad 1 — Fundamentos</option>
+                <option value="2">Unidad 2 — Patrones</option>
+                <option value="3">Unidad 3 — Diseño</option>
+                <option value="4">Unidad 4 — Proyecto</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Semana</label>
+              <select class="field-input" id="aWeek"></select>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Tema / Título</label>
+            <input class="field-input" type="text" id="aTitle"
+              placeholder="Ej: Introducción a los patrones de diseño" />
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Descripción de la clase</label>
+            <textarea class="field-textarea" id="aDesc" rows="5"
+              placeholder="Resumen de lo visto en clase..."></textarea>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label class="field-label">Imagen (nombre de archivo)</label>
+              <input class="field-input" type="text" id="aImage" placeholder="assets/images/semana1.jpg" />
+              <span class="field-hint">Guarda la imagen en assets/images/</span>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Archivo adjunto (nombre)</label>
+              <input class="field-input" type="text" id="aFile" placeholder="semana1-apuntes.pdf" />
+              <span class="field-hint">Guarda el archivo en assets/</span>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Enlace externo (opcional)</label>
+            <input class="field-input" type="url" id="aLink" placeholder="https://..." />
+          </div>
+
+          <button class="btn-primary btn-full" id="saveBtn">Guardar semana</button>
+        </div>
+
+        <!-- Panel derecho -->
+        <div class="admin-side">
+          <!-- Preview -->
+          <div class="admin-card">
+            <h3 class="card-title">Vista previa</h3>
+            <div class="preview-box" id="previewBox">
+              <span class="preview-empty">Completa el formulario para ver la vista previa…</span>
+            </div>
+          </div>
+
+          <!-- Semanas cargadas -->
+          <div class="admin-card">
+            <h3 class="card-title">Semanas guardadas</h3>
+            <div class="loaded-list" id="loadedList"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <!-- Línea decorativa de acento -->
+    <div class="footer-accent"></div>
+
+    <div class="footer-inner">
+      <!-- Columna 1: Autor -->
+      <div class="footer-col">
+        <span class="footer-heading">Autor</span>
+        <span class="footer-line footer-line--name">Mosquera Zevallos Valerio</span>
+        <span class="footer-line">Elaboración propia</span>
+      </div>
+
+      <!-- Columna 2: Contacto académico -->
+      <div class="footer-col">
+        <span class="footer-heading">Contacto</span>
+        <span class="footer-line">Universidad Peruana Los Andes</span>
+        <span class="footer-line"><a href="mailto:r03398d@ms.upla.edu.pe">r03398d@ms.upla.edu.pe</a></span>
+        <span class="footer-line"><a href="mailto:mosqueravalerio10@gmail.com">mosqueravalerio10@gmail.com</a></span>
+      </div>
+
+      <!-- Columna 3: Redes sociales -->
+      <div class="footer-col footer-col--social">
+        <span class="footer-heading">Redes</span>
+        <div class="footer-social-row">
+          <a href="https://linkedin.com/in/valerio-mosquera-zevallos-4b7884329" target="_blank" rel="noopener"
+            class="footer-social" title="LinkedIn">
+            <i class="fa-brands fa-linkedin-in fa-lg"></i>
+            <span class="footer-social-label">LinkedIn</span>
+          </a>
+          <a href="https://github.com/Vaalerio" target="_blank" rel="noopener" class="footer-social" title="GitHub">
+            <i class="fa-brands fa-github fa-lg"></i>
+            <span class="footer-social-label">GitHub</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra inferior de copyright -->
+    <div class="footer-bottom">
+      <span>© 2026 Mosquera Zevallos Valerio · Todos los derechos reservados</span>
+    </div>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">✓ Guardado correctamente</div>
+
+  <!-- SCRIPTS -->
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/portfolio.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+
+</html>

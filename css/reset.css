@@ -1,0 +1,50 @@
+/* ─── RESET ─────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img, video { max-width: 100%; display: block; }
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+a { text-decoration: none; color: inherit; }
+
+ul { list-style: none; }
+
+/* ── Custom selection ── */
+::selection {
+  background: #d97757;
+  color: #faf9f5;
+}
+
+/* ── Focus visible (accesibilidad) ── */
+:focus-visible {
+  outline: 2px solid #d97757;
+  outline-offset: 2px;
+}
+
+/* ── Scrollbar delgada ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #e4e2d9; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #b0aea5; }

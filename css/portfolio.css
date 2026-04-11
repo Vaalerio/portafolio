@@ -1,0 +1,256 @@
+/* ══════════════════════════════════════════════════════
+   HOME — Hero + Cuadrícula pública de semanas
+   ══════════════════════════════════════════════════════ */
+.section--home {
+  padding-top: var(--space-xl);
+}
+
+/* ── Hero con animación de entrada ── */
+.home-hero {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+  padding: var(--space-xl) 0;
+  animation: fadeInUp .7s ease both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.home-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.08;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+}
+
+.home-title em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.home-desc {
+  font-size: 1rem;
+  color: var(--color-muted);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+/* ── Separador visual entre hero y grid ── */
+.weeks-public-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-2xl);
+}
+
+/* ── Tarjeta de semana con animación staggered ── */
+.pub-week-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all .3s cubic-bezier(.25, .46, .45, .94);
+  text-decoration: none;
+  color: inherit;
+  animation: cardIn .5s ease both;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* JS aplicará --card-delay vía style para stagger */
+.pub-week-card {
+  animation-delay: var(--card-delay, 0ms);
+}
+
+.pub-week-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 12px 40px rgba(20, 20, 19, .12);
+  transform: translateY(-6px);
+}
+
+.pub-week-card--empty {
+  opacity: .35;
+  pointer-events: none;
+  filter: grayscale(.3);
+}
+
+/* Imagen de la tarjeta — ratio 16:9 (1920×1080) */
+.pub-week-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--color-surface2);
+  display: block;
+  transition: transform .4s ease;
+}
+
+.pub-week-card:hover .pub-week-thumb {
+  transform: scale(1.04);
+}
+
+/* Contenedor que recorta el zoom de la imagen */
+.pub-week-thumb-wrap {
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border-lt);
+}
+
+/* Placeholder cuando no hay imagen — mismo ratio 16:9 */
+.pub-week-thumb-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, var(--color-surface2) 0%, var(--color-border-lt) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-faint);
+  font-size: 2rem;
+}
+
+/* Cuerpo de la tarjeta */
+.pub-week-body {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.pub-week-label {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.pub-week-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-text);
+  transition: color var(--transition);
+}
+
+.pub-week-card:hover .pub-week-title {
+  color: var(--color-accent-dk);
+}
+
+.pub-week-summary {
+  font-size: .8rem;
+  color: var(--color-muted);
+  line-height: 1.55;
+}
+
+/* ── Indicador de "Ver más" ── */
+.pub-week-arrow {
+  margin-top: auto;
+  padding-top: 8px;
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: all .25s ease;
+}
+
+.pub-week-card:hover .pub-week-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ══════════════════════════════════════════════════════
+   LOGIN — con efecto de entrada suave
+   ══════════════════════════════════════════════════════ */
+.section--login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 140px);
+}
+
+.login-box {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-xl);
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  box-shadow: var(--shadow-lg);
+  animation: loginIn .45s ease both;
+}
+
+@keyframes loginIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Logos centrados */
+.login-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--color-border-lt);
+}
+
+.login-logo {
+  height: 120px;
+  width: auto;
+  object-fit: contain;
+  transition: transform .3s ease;
+}
+
+.login-logo:hover {
+  transform: scale(1.06);
+}
+
+.login-collab-icon {
+  font-size: 1.2rem;
+  color: var(--color-faint);
+  font-weight: 300;
+}
+
+.login-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0;
+}
