@@ -4,12 +4,22 @@
  * Fondo WebGL (Three.js): torus knot + estrellas.
  * Tema: updateTheme() según body.dark vía getIsDark().
  * Transición suave entre paletas (lerp en animate).
+ * Rotación con delta time (THREE.Clock); pixel ratio cap; pausa si pestaña oculta.
  */
 (function () {
+  /** Base ~0.12/frame a 60 Hz; el blend usa `themeBlend` con delta */
   var THEME_LERP = 0.12;
+  /** Más presencia en 120/144 Hz (+40% vs 0.3 rad/s; mismo estilo, más lectura) */
+  var TORUS_RAD_PER_SEC = 0.42;
+  /** Ratio 10:1 respecto al torus */
+  var STARS_RAD_PER_SEC = 0.042;
+  var DELTA_CAP = 0.064;
+  /** Coherencia del blend de tema entre 60 Hz y 144 Hz */
+  var THEME_REF_FPS = 60;
 
   function initThreeBackground(container, getIsDark) {
     const scene = new THREE.Scene();
+    const clock = new THREE.Clock();
 
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -21,7 +31,7 @@
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     container.appendChild(renderer.domElement);
 
     const geometry = new THREE.TorusKnotGeometry(10, 3, 64, 8);
@@ -101,24 +111,36 @@
 
     function animate() {
       requestAnimationFrame(animate);
+      if (document.hidden) return;
 
-      material.color.lerp(targetTorus, THEME_LERP);
-      starMaterial.color.lerp(targetStars, THEME_LERP);
-      curClear.lerp(targetClear, THEME_LERP);
-      curClearAlpha += (targetClearAlpha - curClearAlpha) * THEME_LERP;
+      var delta = Math.min(clock.getDelta(), DELTA_CAP);
+
+      /* Misma “suavidad” temporal del tema en 60 Hz y 144 Hz (sin tocar colores objetivo) */
+      var themeBlend =
+        1 - Math.pow(1 - THEME_LERP, delta * THEME_REF_FPS);
+
+      material.color.lerp(targetTorus, themeBlend);
+      starMaterial.color.lerp(targetStars, themeBlend);
+      curClear.lerp(targetClear, themeBlend);
+      curClearAlpha += (targetClearAlpha - curClearAlpha) * themeBlend;
       renderer.setClearColor(curClear, curClearAlpha);
 
-      torusKnot.rotation.x += 0.005;
-      torusKnot.rotation.y += 0.005;
-      stars.rotation.y += 0.0005;
+      torusKnot.rotation.x += TORUS_RAD_PER_SEC * delta;
+      torusKnot.rotation.y += TORUS_RAD_PER_SEC * delta;
+      stars.rotation.y += STARS_RAD_PER_SEC * delta;
 
       renderer.render(scene, camera);
     }
     animate();
 
+    document.addEventListener("visibilitychange", function onVisibility() {
+      if (!document.hidden) clock.getDelta();
+    });
+
     window.addEventListener("resize", function onResize() {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
