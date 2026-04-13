@@ -5,58 +5,64 @@
 :root {
 
   /* Colores base */
-  --color-bg:        #faf9f5;   /* crema cálido */
-  --color-surface:   #ffffff;
-  --color-surface2:  #f3f2ed;
-  --color-border:    #e4e2d9;
+  --color-bg: #faf9f5;
+  /* crema cálido */
+  --color-surface: #ffffff;
+  --color-surface2: #f3f2ed;
+  --color-border: #e4e2d9;
   --color-border-lt: #eeede8;
 
   /* Texto */
-  --color-text:      #141413;   /* casi negro */
-  --color-muted:     #7a7870;
-  --color-faint:     #b0aea5;
+  --color-text: #141413;
+  /* casi negro */
+  --color-muted: #7a7870;
+  --color-faint: #b0aea5;
 
   /* Acento principal: naranja Anthropic */
-  --color-accent:    #d97757;
+  --color-accent: #d97757;
   --color-accent-lt: #f2ddd6;
   --color-accent-dk: #b85e3e;
 
   /* Acento secundario: azul Anthropic */
-  --color-blue:      #6a9bcc;
-  --color-blue-lt:   #ddeaf6;
+  --color-blue: #6a9bcc;
+  --color-blue-lt: #ddeaf6;
 
   /* Acento terciario: verde Anthropic */
-  --color-green:     #788c5d;
-  --color-green-lt:  #dfe8d2;
+  --color-green: #788c5d;
+  --color-green-lt: #dfe8d2;
 
   /* Colores por unidad */
-  --unit1: #d97757;   /* naranja */
-  --unit2: #6a9bcc;   /* azul */
-  --unit3: #788c5d;   /* verde */
-  --unit4: #141413;   /* negro */
+  --unit1: #d97757;
+  /* naranja */
+  --unit2: #6a9bcc;
+  /* azul */
+  --unit3: #788c5d;
+  /* verde */
+  --unit4: #141413;
+  /* negro */
 
   /* Tipografía */
   --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
 
   /* Espaciado */
-  --space-xs:  4px;
-  --space-sm:  8px;
-  --space-md:  16px;
-  --space-lg:  24px;
-  --space-xl:  40px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
   --space-2xl: 64px;
   --space-3xl: 96px;
 
   /* Radios */
-  --radius-sm:  6px;
-  --radius-md:  12px;
-  --radius-lg:  18px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
 
   /* Sombras */
-  --shadow-sm: 0 1px 3px rgba(20,20,19,.06);
-  --shadow-md: 0 4px 16px rgba(20,20,19,.08);
-  --shadow-lg: 0 8px 32px rgba(20,20,19,.10);
+  --shadow-sm: 0 1px 3px rgba(20, 20, 19, .06);
+  --shadow-md: 0 4px 16px rgba(20, 20, 19, .08);
+  --shadow-lg: 0 8px 32px rgba(20, 20, 19, .10);
 
   /* Transiciones */
   --transition: .2s ease;
@@ -84,7 +90,7 @@
 .dark {
   --color-bg: #1c1b18;
   --color-surface: #252420;
-  --color-surface2: #2e2c27;
+  --color-surface2: #1c1b18f2;
   --color-border: #3d3a34;
   --color-border-lt: #35322d;
 
