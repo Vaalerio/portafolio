@@ -32,8 +32,8 @@
   <script>
     (function () {
       try {
-        if (localStorage.getItem("arqsw_theme") === "dark") document.body.classList.add("dark");
-      } catch (e) {}
+        if (localStorage.getItem("arqsw_theme") === "dark") document.documentElement.classList.add("dark");
+      } catch (e) { }
     })();
   </script>
 
@@ -49,7 +49,9 @@
     <div class="header-inner">
       <!-- Izquierda: Logo universidad (lleva al home) -->
       <a href="index.html" class="header-logo-link" id="logoHome">
-        <img src="assets/images/logo_universidad.png" alt="Logo Universidad" class="header-logo-img" data-src-light="assets/images/logo_universidad.png" data-src-dark="assets/images/logo_universidad_blanco.png" />
+        <img src="assets/images/logo_universidad.png" alt="Logo Universidad" class="header-logo-img"
+          data-src-light="assets/images/logo_universidad.png"
+          data-src-dark="assets/images/logo_universidad_blanco.png" />
       </a>
 
       <!-- Centro: Título + subtítulo -->
@@ -60,13 +62,19 @@
 
       <!-- Derecha: tema + Login / Logout -->
       <div class="header-right">
-        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar a tema oscuro" title="Tema oscuro">
-          <svg class="theme-toggle__icon theme-toggle__icon--moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar a tema oscuro"
+          title="Tema oscuro">
+          <svg class="theme-toggle__icon theme-toggle__icon--moon" xmlns="http://www.w3.org/2000/svg" width="20"
+            height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
           </svg>
-          <svg class="theme-toggle__icon theme-toggle__icon--sun hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg class="theme-toggle__icon theme-toggle__icon--sun hidden" xmlns="http://www.w3.org/2000/svg" width="20"
+            height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="4" />
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+            <path
+              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
           </svg>
         </button>
         <nav class="header-nav" id="headerNav">
@@ -95,7 +103,7 @@
         <h1 class="home-title">Arquitectura<br><em>de Software</em></h1>
         <p class="home-desc">
           Portafolio académico de 16 semanas organizado en 4 unidades.<br>
-          Documentación semanal, archivos y reflexiones del curso — 2026.
+          Documentación semanal y archivos — 2026.
         </p>
       </div>
       <div class="weeks-public-grid" id="weeksPublicGrid">
@@ -108,9 +116,13 @@
       <div class="login-box">
         <!-- Logos centrados -->
         <div class="login-logos">
-          <img src="assets/images/logo_transparente.png" alt="Logo Universidad" class="login-logo" data-src-light="assets/images/logo_transparente.png" data-src-dark="assets/images/logo_transparente_blanco.png" />
+          <img src="assets/images/logo_transparente.png" alt="Logo Universidad" class="login-logo"
+            data-src-light="assets/images/logo_transparente.png"
+            data-src-dark="assets/images/logo_transparente_blanco.png" />
           <span class="login-collab-icon">×</span>
-          <img src="assets/images/logo_personal_fondo_transparente.png" alt="Logo Personal" class="login-logo" data-src-light="assets/images/logo_personal_fondo_transparente.png" data-src-dark="assets/images/logo_personal_fondo_transparente_blanco.png" />
+          <img src="assets/images/logo_personal_fondo_transparente.png" alt="Logo Personal" class="login-logo"
+            data-src-light="assets/images/logo_personal_fondo_transparente.png"
+            data-src-dark="assets/images/logo_personal_fondo_transparente_blanco.png" />
         </div>
 
         <h2 class="login-title">Iniciar sesión</h2>
@@ -132,7 +144,6 @@
     <section id="adminSection" class="section section--admin hidden">
       <div class="admin-header">
         <h2 class="admin-title">Panel de administrador</h2>
-        <p class="admin-sub">Agrega o actualiza el contenido semanal</p>
       </div>
 
       <div class="admin-grid">

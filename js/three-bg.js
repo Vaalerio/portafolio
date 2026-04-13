@@ -87,7 +87,7 @@
       if (dark) {
         targetClear.setHex(0x1c1b18);
         targetClearAlpha = 1;
-        targetTorus.setHex(0xe6e6e6);
+        targetTorus.setHex(0x9f9f9f);
         targetStars.setHex(0xf5f5f5);
       } else {
         targetClear.setHex(0x000000);
@@ -157,7 +157,7 @@
     if (!el || typeof THREE === "undefined") return;
 
     window.__threeBgApi = initThreeBackground(el, function getIsDark() {
-      return document.body.classList.contains("dark");
+      return document.documentElement.classList.contains("dark");
     });
   }
 

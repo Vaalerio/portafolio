@@ -33,18 +33,18 @@ ul { list-style: none; }
 
 /* ── Custom selection ── */
 ::selection {
-  background: #d97757;
-  color: #faf9f5;
+  background: var(--color-accent);
+  color: var(--color-bg);
 }
 
 /* ── Focus visible (accesibilidad) ── */
 :focus-visible {
-  outline: 2px solid #d97757;
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
 /* ── Scrollbar delgada ── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #e4e2d9; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #b0aea5; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-muted); }

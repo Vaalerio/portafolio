@@ -11,7 +11,7 @@ const Theme = {
   init() {
     const stored = this._getStored();
     if (stored === "dark" || stored === "light") {
-      document.body.classList.toggle("dark", stored === "dark");
+      document.documentElement.classList.toggle("dark", stored === "dark");
     }
     this._syncButton();
     this.syncThemedImages();
@@ -20,11 +20,18 @@ const Theme = {
     if (btn) {
       btn.addEventListener("click", () => this.toggle());
     }
+
+    // Retrasar levemente la habilitación de transiciones para que el render inicial sea sin transición
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.documentElement.classList.add("theme-ready");
+      });
+    });
   },
 
   toggle() {
-    const next = document.body.classList.contains("dark") ? "light" : "dark";
-    document.body.classList.toggle("dark", next === "dark");
+    const next = document.documentElement.classList.contains("dark") ? "light" : "dark";
+    document.documentElement.classList.toggle("dark", next === "dark");
     try {
       localStorage.setItem(THEME_KEY, next);
     } catch (e) {
@@ -46,7 +53,7 @@ const Theme = {
 
   /** Imágenes con data-src-light / data-src-dark (logos según tema) */
   syncThemedImages() {
-    const dark = document.body.classList.contains("dark");
+    const dark = document.documentElement.classList.contains("dark");
     document.querySelectorAll("img[data-src-light][data-src-dark]").forEach((el) => {
       const next = dark ? el.dataset.srcDark : el.dataset.srcLight;
       if (next) el.src = next;
@@ -64,7 +71,7 @@ const Theme = {
   _syncButton() {
     const btn = document.getElementById("themeToggle");
     if (!btn) return;
-    const dark = document.body.classList.contains("dark");
+    const dark = document.documentElement.classList.contains("dark");
     const moon = btn.querySelector(".theme-toggle__icon--moon");
     const sun = btn.querySelector(".theme-toggle__icon--sun");
     if (moon) moon.classList.toggle("hidden", dark);

@@ -12,18 +12,21 @@
   <link rel="stylesheet" href="../css/variables.css" />
   <link rel="stylesheet" href="../css/layout.css" />
   <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/three-bg.css" />
   <link rel="stylesheet" href="../css/semana-detail.css" />
 </head>
 <body>
   <script>
     (function () {
       try {
-        if (localStorage.getItem("arqsw_theme") === "dark") document.body.classList.add("dark");
+        if (localStorage.getItem("arqsw_theme") === "dark") document.documentElement.classList.add("dark");
       } catch (e) {}
     })();
   </script>
 
   <header class="site-header">
+    <div class="header-accent"></div>
     <div class="header-inner">
       <a href="../index.html" class="header-logo-link">
         <img src="../assets/images/logo_universidad.png" alt="Logo Universidad" class="header-logo-img" data-src-light="../assets/images/logo_universidad.png" data-src-dark="../assets/images/logo_universidad_blanco.png" />
@@ -109,6 +112,8 @@
       <span>&copy; 2026 Mosquera Zevallos Valerio &middot; Todos los derechos reservados</span>
     </div>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
   <script src="../js/theme.js"></script>
+  <script src="../js/three-bg.js"></script>
 </body>
 </html>

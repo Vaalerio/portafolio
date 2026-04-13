@@ -81,7 +81,7 @@
 }
 
 /* ─── Tema oscuro ─────────────────────────────────────────── */
-body.dark {
+.dark {
   --color-bg: #1c1b18;
   --color-surface: #252420;
   --color-surface2: #2e2c27;
