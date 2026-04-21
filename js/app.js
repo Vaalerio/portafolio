@@ -5,7 +5,7 @@
  * Maneja autenticación, navegación y estado de sesión.
  *
  * ── Credenciales ────────────────────────────────────
- *    Admin:    admin / 987admin
+ *    Admin:    admin / 12345
  *    Usuarios: raul / raul123
  *              valerio / valerio123
  *              ivan / ivan123
@@ -17,7 +17,7 @@
  */
 
 const USERS = [
-  { user: "admin",    pass: "987admin",      role: "admin" },
+  { user: "admin",    pass: "12345",      role: "admin" },
   { user: "raul",     pass: "raul123",    role: "user"  },
   { user: "valerio",  pass: "valerio123", role: "user"  },
   { user: "ivan",     pass: "ivan123",    role: "user"  },

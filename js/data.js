@@ -44,6 +44,15 @@ const INITIAL_DATA = [
     file: "Sem01_Arquitectura_de_Software_Resumen.pdf",
     link: ""
   },
+  {
+    unit: 1, week: 2,
+    title: "Semana 02 - Importancia de los estándares en la arquitectura de software",
+    summary: "Normas internacionales, modelos de calidad y buenas prácticas aplicadas a arquitectura de software.",
+    description: "Importancia de los estándares en arquitectura de software: normas internacionales, modelos de calidad, procesos y buenas prácticas en desarrollo.",
+    image: "assets/images/Sem02_imagen_portada.png",
+    file: "",
+    link: ""
+  },
 
   // ── Semanas vacías — edítalas conforme avance el curso ──
   { unit: 1, week: 3, title: "", summary: "", description: "", image: "", file: "", link: "" },
@@ -65,17 +74,52 @@ const INITIAL_DATA = [
 /* ─── Storage helpers ──────────────────────────────── */
 const STORAGE_KEY = "arqsw_portfolio_v2";
 
+/** Normaliza rutas guardadas con typo o espacios (p. ej. desde el panel admin). */
+function _coalesceWeekImage(weekNum, storedImage, seedImage) {
+  const raw = (storedImage || "").trim().replace(/\\/g, "/");
+  if (!raw) return (seedImage || "").trim();
+  const lower = raw.toLowerCase();
+  const isWeek2 = Number(weekNum) === 2;
+  const looksLikeSem02Cover =
+    isWeek2 &&
+    lower.includes("sem02") &&
+    lower.includes("portada") &&
+    (/\s/.test(raw) || lower.includes("imagen portada") || !lower.includes("sem02_imagen"));
+  if (looksLikeSem02Cover && seedImage) return seedImage.trim();
+  return raw;
+}
+
+function _mergeWeekItem(seed, stored) {
+  if (!seed && !stored) return null;
+  if (!stored) return { ...seed };
+  if (!seed) return { ...stored };
+  const merged = { ...seed, ...stored };
+  merged.week = seed.week;
+  merged.unit = stored.unit || seed.unit;
+  merged.image = _coalesceWeekImage(merged.week, merged.image, seed.image);
+  return merged;
+}
+
 const Data = {
   /** Devuelve el mapa de datos (week → item) */
   load() {
+    const seedMap = {};
+    INITIAL_DATA.forEach(item => { seedMap[item.week] = item; });
+
+    let storedMap = {};
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) return JSON.parse(stored);
+      if (stored) storedMap = JSON.parse(stored);
     } catch (e) { }
-    // Primera carga: usar INITIAL_DATA como semilla
-    const map = {};
-    INITIAL_DATA.forEach(item => { map[item.week] = item; });
-    return map;
+
+    if (!Object.keys(storedMap).length) return { ...seedMap };
+
+    const out = {};
+    for (let w = 1; w <= 16; w++) {
+      const stored = storedMap[w] ?? storedMap[String(w)];
+      out[w] = _mergeWeekItem(seedMap[w], stored);
+    }
+    return out;
   },
 
   /** Guarda el mapa completo */
