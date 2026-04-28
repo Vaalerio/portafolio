@@ -2,77 +2,76 @@
  * app.js
  * ─────────────────────────────────────────────────────
  * Punto de entrada principal.
- * Maneja autenticación, navegación y estado de sesión.
+ * Maneja autenticación (Supabase Auth), navegación
+ * y estado de sesión.
  *
- * ── Credenciales ────────────────────────────────────
- *    Admin:    admin / 12345
- *    Usuarios: raul / raul123
- *              valerio / valerio123
- *              ivan / ivan123
- *              luis / luis123
- *
- * Los usuarios normales ven la misma vista pública.
- * Solo el admin puede acceder al panel de contenido.
+ * Depende de: Auth (auth.js), UI (ui.js),
+ *             Portfolio (portfolio.js), Admin (admin.js)
  * ─────────────────────────────────────────────────────
  */
 
-const USERS = [
-  { user: "admin",    pass: "12345",      role: "admin" },
-  { user: "raul",     pass: "raul123",    role: "user"  },
-  { user: "valerio",  pass: "valerio123", role: "user"  },
-  { user: "ivan",     pass: "ivan123",    role: "user"  },
-  { user: "luis",     pass: "luis123",     role: "user"  },
-];
-
-const SESSION_KEY = "arqsw_session_v2";
-
 /* ─── Estado de sesión ──────────────────────────────── */
-let currentRole = null;
+var currentRole = null;
 
-function getSession() {
-  try { return JSON.parse(sessionStorage.getItem(SESSION_KEY)); } catch(e) { return null; }
-}
-function setSession(data) { sessionStorage.setItem(SESSION_KEY, JSON.stringify(data)); }
-function clearSession()   { sessionStorage.removeItem(SESSION_KEY); }
+/* ─── Login (Supabase Auth) ─────────────────────────── */
+async function doLogin() {
+  var email = document.getElementById("inputUser").value.trim();
+  var pass  = document.getElementById("inputPass").value.trim();
 
-/* ─── Login ─────────────────────────────────────────── */
-function doLogin() {
-  const user = document.getElementById("inputUser").value.trim().toLowerCase();
-  const pass = document.getElementById("inputPass").value.trim();
+  if (!email) { alert("Ingresa tu correo electrónico."); return; }
+  if (!pass)  { alert("Ingresa tu contraseña."); return; }
 
-  if (!user) { alert("Ingresa un nombre de usuario."); return; }
-  if (!pass) { alert("Ingresa una contraseña."); return; }
+  // Deshabilitar botón durante la petición
+  var btn = document.getElementById("loginBtn");
+  var originalText = btn.textContent;
+  btn.textContent = "Ingresando…";
+  btn.disabled = true;
 
-  const found = USERS.find(u => u.user === user && u.pass === pass);
+  var { user, error } = await Auth.login(email, pass);
 
-  if (!found) {
-    alert("Credenciales incorrectas.\nVerifica tu usuario y contraseña.");
+  btn.textContent = originalText;
+  btn.disabled = false;
+
+  if (error) {
+    alert("Error de autenticación:\n" + (error.message || "Credenciales incorrectas."));
     return;
   }
 
-  _enterAs(found.role, found.user);
+  // Login exitoso → obtener rol y nombre
+  await _restoreSession();
 }
 
-function _enterAs(role, displayName) {
+/* ─── Restaurar sesión ──────────────────────────────── */
+async function _restoreSession() {
+  var user = await Auth.getUser();
+  if (!user) {
+    currentRole = null;
+    UI.setNav(null);
+    UI.show("homeSection");
+    return;
+  }
+
+  var role = await Auth.getRole();
+  var name = await Auth.getDisplayName();
+
   currentRole = role;
-  setSession({ role, name: displayName });
   UI.setNav(role);
 
   if (role === "admin") {
     Admin.init();
-    Admin.renderLoadedList();
     UI.show("adminSection");
+    UI.toast("Bienvenido, " + name);
   } else {
-    // Usuarios normales → vuelven al home público
     Portfolio.render();
     UI.show("homeSection");
-    UI.toast("Bienvenido, " + displayName);
+    UI.toast("Bienvenido, " + name);
   }
 }
 
-function doLogout() {
+/* ─── Logout ────────────────────────────────────────── */
+async function doLogout() {
+  await Auth.logout();
   currentRole = null;
-  clearSession();
   UI.setNav(null);
   document.getElementById("inputUser").value = "";
   document.getElementById("inputPass").value = "";
@@ -81,17 +80,17 @@ function doLogout() {
 }
 
 /* ─── Navegación ─────────────────────────────────────── */
-document.getElementById("logoHome").addEventListener("click", (e) => {
+document.getElementById("logoHome").addEventListener("click", function (e) {
   e.preventDefault();
   Portfolio.render();
   UI.show("homeSection");
 });
 
-document.getElementById("btnAdmin").addEventListener("click", () => {
+document.getElementById("btnAdmin").addEventListener("click", function () {
   UI.show("adminSection");
 });
 
-document.getElementById("btnLogin").addEventListener("click", () => {
+document.getElementById("btnLogin").addEventListener("click", function () {
   UI.show("loginSection");
 });
 
@@ -100,28 +99,23 @@ document.getElementById("btnLogout").addEventListener("click", doLogout);
 document.getElementById("loginBtn").addEventListener("click", doLogin);
 
 // Enter en los campos de login
-["inputUser", "inputPass"].forEach(id => {
-  document.getElementById(id).addEventListener("keydown", e => {
+["inputUser", "inputPass"].forEach(function (id) {
+  document.getElementById(id).addEventListener("keydown", function (e) {
     if (e.key === "Enter") doLogin();
   });
 });
 
 /* ─── Header scroll shadow ──────────────────────────── */
-window.addEventListener("scroll", () => {
+window.addEventListener("scroll", function () {
   document.getElementById("siteHeader")
     .classList.toggle("scrolled", window.scrollY > 10);
 }, { passive: true });
 
 /* ─── Inicio ────────────────────────────────────────── */
-(function init() {
-  // Siempre renderizar la cuadrícula pública
+(async function init() {
+  // Renderizar la cuadrícula pública siempre
   Portfolio.render();
 
-  // Restaurar sesión si existe
-  const session = getSession();
-  if (session) {
-    _enterAs(session.role, session.name);
-  } else {
-    UI.show("homeSection");
-  }
+  // Intentar restaurar sesión de Supabase
+  await _restoreSession();
 })();
