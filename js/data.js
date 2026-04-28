@@ -60,7 +60,7 @@ const INITIAL_DATA = [
     title: "Semana 03 - Diseño del Sistema (SDD)",
     summary: "Documento de diseño del sistema, mapas conceptuales y diagramas de arquitectura de software.",
     description: "Elaboración del documento SDD (Software Design Document), mapas conceptuales y diagramas de arquitectura de software.",
-    image: "assets/images/Sem03_mapa_1.jpg",
+    image: "assets/images/Sem03_imagen_portada.png",
     file: "Sem03_1777402809247-SDD_dise_o_del_sistema.pdf",
     link: ""
   },
