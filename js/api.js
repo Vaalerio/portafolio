@@ -149,37 +149,62 @@ var Api = (function () {
 
     /**
      * Sube un archivo al bucket y crea un registro en week_assets.
-     * @param {number} weekId - ID de la semana
-     * @param {File} file - objeto File del input
-     * @param {string} fileType - "image"|"pdf"|"word"|"zip"|"other"
-     * @param {string} displayName - nombre amigable para el usuario
-     * @param {number} weekNumber - número de semana (para la ruta en Storage)
+     * @param {object} opts
+     * @param {number} opts.weekId
+     * @param {File}   opts.file
+     * @param {string} opts.fileType
+     * @param {string} opts.displayName
+     * @param {number} opts.weekNumber
+     * @param {string} [opts.documentGroup] - título del documento (agrupar archivos)
+     * @param {string} [opts.description]   - descripción del asset o del grupo
      */
-    async uploadAsset(weekId, file, fileType, displayName, weekNumber) {
+    async uploadAsset(opts) {
       var sb = _sb();
-      var storagePath = "week-" + weekNumber + "/" + Date.now() + "_" + file.name;
+      var storagePath = "week-" + opts.weekNumber + "/" + Date.now() + "_" + opts.file.name;
 
-      // 1. Subir al bucket
       var { error: uploadError } = await sb.storage
         .from(BUCKET)
-        .upload(storagePath, file, {
-          cacheControl: "3600",
-          upsert: false,
-        });
+        .upload(storagePath, opts.file, { cacheControl: "3600", upsert: false });
 
       if (uploadError) return { data: null, error: uploadError };
 
-      // 2. Crear registro en la tabla
+      var row = {
+        week_id: opts.weekId,
+        file_name: opts.file.name,
+        storage_path: storagePath,
+        file_type: opts.fileType,
+        file_size: opts.file.size,
+        display_name: opts.displayName || opts.file.name,
+      };
+      if (opts.documentGroup) row.document_group = opts.documentGroup;
+      if (opts.description)  row.description = opts.description;
+
       var { data, error } = await sb
         .from("week_assets")
-        .insert({
-          week_id: weekId,
-          file_name: file.name,
-          storage_path: storagePath,
-          file_type: fileType,
-          file_size: file.size,
-          display_name: displayName || file.name,
-        })
+        .insert(row)
+        .select()
+        .single();
+
+      return { data, error };
+    },
+
+    /**
+     * Sube una imagen de portada y actualiza weeks.cover_image.
+     */
+    async uploadCoverImage(weekId, file, weekNumber) {
+      var sb = _sb();
+      var storagePath = "week-" + weekNumber + "/cover_" + Date.now() + "_" + file.name;
+
+      var { error: upErr } = await sb.storage
+        .from(BUCKET)
+        .upload(storagePath, file, { cacheControl: "3600", upsert: false });
+      if (upErr) return { data: null, error: upErr };
+
+      var publicUrl = this.getAssetUrl(storagePath);
+      var { data, error } = await sb
+        .from("weeks")
+        .update({ cover_image: publicUrl })
+        .eq("id", weekId)
         .select()
         .single();
 

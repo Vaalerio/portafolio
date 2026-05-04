@@ -115,7 +115,10 @@
 
 .loaded-item:hover { border-color: var(--color-border); }
 
-.loaded-info {}
+.loaded-info {
+  flex: 1;
+  overflow: hidden;
+}
 
 .loaded-meta {
   font-size: .68rem;
@@ -150,4 +153,79 @@
   color: var(--color-faint);
   font-style: italic;
   padding: var(--space-sm) 0;
+}
+
+/* ── Admin Sub-sections (Activities, Files, Videos, Links) ── */
+.admin-subsection {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border-lt);
+}
+
+.admin-subsection-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.admin-subsection-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.admin-add-btn {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  background: var(--color-accent-lt);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.admin-add-btn:hover {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* ── Cover preview ── */
+.cover-preview-box {
+  background: var(--color-surface2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cover-preview-img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Botón eliminar en items ── */
+.loaded-del {
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  font-size: .85rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.loaded-del:hover {
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.1);
 }

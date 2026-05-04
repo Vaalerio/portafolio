@@ -25,17 +25,21 @@
     })();
   </script>
 
+  <div id="three-bg" class="three-bg" aria-hidden="true"></div>
+
   <header class="site-header">
     <div class="header-accent"></div>
     <div class="header-inner">
       <a href="../index.html" class="header-logo-link">
-        <img src="../assets/images/logo_universidad.png" alt="Logo Universidad" class="header-logo-img" data-src-light="../assets/images/logo_universidad.png" data-src-dark="../assets/images/logo_universidad_blanco.png" />
+        <img src="../assets/images/logo_universidad.png" alt="Logo Universidad" class="header-logo-img"
+          data-src-light="../assets/images/logo_universidad.png"
+          data-src-dark="../assets/images/logo_universidad_blanco.png" />
       </a>
       <div class="header-center">
-        <span class="header-portafolio-title">PORTAFOLIO</span>
+        <span class="header-portafolio-title">PORTFOLIO</span>
       </div>
       <div class="header-right">
-        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar a tema oscuro" title="Tema oscuro">
+        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Tema">
           <svg class="theme-toggle__icon theme-toggle__icon--moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
           </svg>
@@ -48,36 +52,8 @@
     </div>
   </header>
 
-  <main class="site-main detail-main">
-    <a href="../index.html" class="btn-back">&#8592; Volver al portafolio</a>
-    <div class="week-header">
-      <div class="week-eyebrow">Semana 14</div>
-      <h1 class="week-detail-title">T&iacute;tulo del tema de la semana 14</h1>
-    </div>
-
-    <section class="content-section">
-      <h2>1. Resumen de la clase</h2>
-      <p>Aqu&iacute; puedes escribir todo lo que se vio en clase de forma extensa.</p>
-    </section>
-
-    <section class="content-section">
-      <h2>2. Archivos y Entregables</h2>
-      <div class="download-grid">
-        <!-- Agrega tarjetas de descarga aqu&iacute; -->
-      </div>
-    </section>
-
-    <section class="content-section">
-      <h2>3. Investigaci&oacute;n externa</h2>
-      <p>Informaci&oacute;n adicional, enlaces o apuntes de libros y art&iacute;culos investigados.</p>
-    </section>
-
-    <section class="content-section">
-      <h2>4. Actividades y Trabajos</h2>
-      <div class="activity-box">
-        <p>Agrega aqu&iacute; las actividades asignadas por el ingeniero.</p>
-      </div>
-    </section>
+  <main class="site-main detail-main" id="weekContent">
+    <!-- Contenido cargado dinámicamente por week-detail.js -->
   </main>
 
   <footer class="site-footer">
@@ -112,8 +88,13 @@
       <span>&copy; 2026 Mosquera Zevallos Valerio &middot; Todos los derechos reservados</span>
     </div>
   </footer>
+
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
   <script src="../js/theme.js"></script>
   <script src="../js/three-bg.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/week-detail.js"></script>
 </body>
 </html>

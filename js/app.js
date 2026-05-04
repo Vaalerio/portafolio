@@ -21,7 +21,6 @@ async function doLogin() {
   if (!email) { alert("Ingresa tu correo electrónico."); return; }
   if (!pass)  { alert("Ingresa tu contraseña."); return; }
 
-  // Deshabilitar botón durante la petición
   var btn = document.getElementById("loginBtn");
   var originalText = btn.textContent;
   btn.textContent = "Ingresando…";
@@ -37,12 +36,16 @@ async function doLogin() {
     return;
   }
 
-  // Login exitoso → obtener rol y nombre
-  await _restoreSession();
+  // Login exitoso → obtener rol y mostrar admin
+  await _restoreSession(true);
 }
 
-/* ─── Restaurar sesión ──────────────────────────────── */
-async function _restoreSession() {
+/**
+ * Restaurar sesión.
+ * @param {boolean} isLogin - true si viene de un login fresco (mostrar admin),
+ *                            false si es recarga de página (mostrar home).
+ */
+async function _restoreSession(isLogin) {
   var user = await Auth.getUser();
   if (!user) {
     currentRole = null;
@@ -57,14 +60,16 @@ async function _restoreSession() {
   currentRole = role;
   UI.setNav(role);
 
-  if (role === "admin") {
+  if (role === "admin" && isLogin) {
+    // Solo mostrar admin panel al hacer login fresco
     Admin.init();
     UI.show("adminSection");
     UI.toast("Bienvenido, " + name);
   } else {
+    // Recarga de página o usuario normal → siempre home
     Portfolio.render();
     UI.show("homeSection");
-    UI.toast("Bienvenido, " + name);
+    if (isLogin) UI.toast("Bienvenido, " + name);
   }
 }
 
@@ -87,6 +92,7 @@ document.getElementById("logoHome").addEventListener("click", function (e) {
 });
 
 document.getElementById("btnAdmin").addEventListener("click", function () {
+  Admin.init();
   UI.show("adminSection");
 });
 
@@ -113,9 +119,7 @@ window.addEventListener("scroll", function () {
 
 /* ─── Inicio ────────────────────────────────────────── */
 (async function init() {
-  // Renderizar la cuadrícula pública siempre
   Portfolio.render();
-
-  // Intentar restaurar sesión de Supabase
-  await _restoreSession();
+  // Restaurar sesión sin redirigir a admin (false = page reload)
+  await _restoreSession(false);
 })();

@@ -148,9 +148,9 @@
 
       <div class="admin-grid">
 
-        <!-- Formulario -->
+        <!-- Formulario principal -->
         <div class="admin-form-card">
-          <h3 class="card-title">Nueva entrada</h3>
+          <h3 class="card-title">Editar semana</h3>
 
           <div class="field-row">
             <div class="field-group">
@@ -175,43 +175,84 @@
           </div>
 
           <div class="field-group">
-            <label class="field-label">Descripción de la clase</label>
-            <textarea class="field-textarea" id="aDesc" rows="5"
-              placeholder="Resumen de lo visto en clase..."></textarea>
-          </div>
-
-          <div class="field-row">
-            <div class="field-group">
-              <label class="field-label">Imagen (nombre de archivo)</label>
-              <input class="field-input" type="text" id="aImage" placeholder="assets/images/semana1.jpg" />
-              <span class="field-hint">Guarda la imagen en assets/images/</span>
-            </div>
-            <div class="field-group">
-              <label class="field-label">Archivo adjunto (nombre)</label>
-              <input class="field-input" type="text" id="aFile" placeholder="semana1-apuntes.pdf" />
-              <span class="field-hint">Guarda el archivo en assets/</span>
-            </div>
+            <label class="field-label">Resumen (para la tarjeta)</label>
+            <input class="field-input" type="text" id="aSummary"
+              placeholder="Breve resumen de ~15 palabras…" />
           </div>
 
           <div class="field-group">
-            <label class="field-label">Enlace externo (opcional)</label>
-            <input class="field-input" type="url" id="aLink" placeholder="https://..." />
+            <label class="field-label">Descripción de la clase</label>
+            <textarea class="field-textarea" id="aDesc" rows="4"
+              placeholder="Resumen de lo visto en clase..."></textarea>
           </div>
 
           <button class="btn-primary btn-full" id="saveBtn">Guardar semana</button>
+
+          <!-- ── Imagen de portada ── -->
+          <div class="admin-subsection">
+            <div class="admin-subsection-header">
+              <h4 class="admin-subsection-title">Imagen de portada</h4>
+            </div>
+            <div id="coverPreview" class="cover-preview-box">
+              <span class="loaded-empty">Sin portada</span>
+            </div>
+            <div class="field-row" style="margin-top: var(--space-sm);">
+              <div class="field-group" style="flex:1">
+                <input class="field-input" type="file" id="coverUploadInput" accept="image/*" />
+              </div>
+              <div class="field-group" style="flex:0 0 auto; align-self:flex-end;">
+                <button class="btn-primary" id="coverUploadBtn">Subir portada</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Actividades ── -->
+          <div class="admin-subsection">
+            <div class="admin-subsection-header">
+              <h4 class="admin-subsection-title">Actividades</h4>
+              <button class="admin-add-btn" id="addActivityBtn" title="Agregar actividad">+ Agregar</button>
+            </div>
+            <div class="loaded-list" id="activitiesList"></div>
+          </div>
+
+          <!-- ── Archivos ── -->
+          <div class="admin-subsection">
+            <div class="admin-subsection-header">
+              <h4 class="admin-subsection-title">Archivos</h4>
+            </div>
+            <div class="loaded-list" id="assetsList"></div>
+            <div class="field-row" style="margin-top: var(--space-sm);">
+              <div class="field-group" style="flex:1">
+                <input class="field-input" type="file" id="fileUploadInput"
+                  accept=".pdf,.doc,.docx,.zip,.rar,.jpg,.jpeg,.png,.gif,.webp,.svg" />
+              </div>
+              <div class="field-group" style="flex:0 0 auto; align-self:flex-end;">
+                <button class="btn-primary" id="uploadBtn">Subir archivo</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Videos ── -->
+          <div class="admin-subsection">
+            <div class="admin-subsection-header">
+              <h4 class="admin-subsection-title">Videos de YouTube</h4>
+              <button class="admin-add-btn" id="addVideoBtn" title="Agregar video">+ Agregar</button>
+            </div>
+            <div class="loaded-list" id="videosList"></div>
+          </div>
+
+          <!-- ── Enlaces ── -->
+          <div class="admin-subsection">
+            <div class="admin-subsection-header">
+              <h4 class="admin-subsection-title">Enlaces externos</h4>
+              <button class="admin-add-btn" id="addLinkBtn" title="Agregar enlace">+ Agregar</button>
+            </div>
+            <div class="loaded-list" id="linksList"></div>
+          </div>
         </div>
 
         <!-- Panel derecho -->
         <div class="admin-side">
-          <!-- Preview -->
-          <div class="admin-card">
-            <h3 class="card-title">Vista previa</h3>
-            <div class="preview-box" id="previewBox">
-              <span class="preview-empty">Completa el formulario para ver la vista previa…</span>
-            </div>
-          </div>
-
-          <!-- Semanas cargadas -->
           <div class="admin-card">
             <h3 class="card-title">Semanas guardadas</h3>
             <div class="loaded-list" id="loadedList"></div>
@@ -282,9 +323,6 @@
   <script src="js/supabase.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/api.js"></script>
-
-  <!-- Datos locales (fallback temporal durante migración) -->
-  <script src="js/data.js"></script>
 
   <script src="js/ui.js"></script>
   <script src="js/admin.js"></script>

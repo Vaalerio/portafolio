@@ -4,12 +4,7 @@
  * Capa de autenticación sobre Supabase Auth.
  * Usa `window._supabase` (creado por supabase.js).
  *
- * Expone el objeto global `Auth` con:
- *   Auth.login(email, password)
- *   Auth.logout()
- *   Auth.getUser()
- *   Auth.getRole()
- *   Auth.onAuthChange(callback)
+ * Expone el objeto global `Auth`.
  * ─────────────────────────────────────────────────────
  */
 var Auth = (function () {
@@ -19,8 +14,7 @@ var Auth = (function () {
 
   return {
     /**
-     * Login con email + contraseña (Supabase Auth).
-     * @returns {{ user, error }}
+     * Login con email + contraseña.
      */
     async login(email, password) {
       var sb = _sb();
@@ -40,17 +34,26 @@ var Auth = (function () {
     },
 
     /**
-     * Obtener el usuario autenticado actual (o null).
+     * Obtener sesión actual (más confiable que getUser tras login).
      */
-    async getUser() {
+    async getSession() {
       var sb = _sb();
       if (!sb) return null;
-      var { data } = await sb.auth.getUser();
-      return data?.user || null;
+      var { data, error } = await sb.auth.getSession();
+      if (error || !data.session) return null;
+      return data.session;
     },
 
     /**
-     * Obtener el rol del usuario actual desde la tabla `profiles`.
+     * Obtener el usuario autenticado actual.
+     */
+    async getUser() {
+      var session = await this.getSession();
+      return session ? session.user : null;
+    },
+
+    /**
+     * Obtener el rol del usuario desde la tabla `profiles`.
      * @returns {"admin" | "user" | null}
      */
     async getRole() {
@@ -82,12 +85,11 @@ var Auth = (function () {
         .eq("id", user.id)
         .single();
 
-      return data?.display_name || user.email.split("@")[0];
+      return (data && data.display_name) || user.email.split("@")[0];
     },
 
     /**
      * Escuchar cambios de estado de autenticación.
-     * @param {function} callback - recibe (event, session)
      */
     onAuthChange(callback) {
       var sb = _sb();

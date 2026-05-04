@@ -116,6 +116,24 @@
 .pub-week-thumb-wrap {
   overflow: hidden;
   border-bottom: 1px solid var(--color-border-lt);
+  position: relative;
+}
+
+/* Overlay oscuro para legibilidad sobre cover image */
+.pub-week-thumb-wrap--cover {
+  position: relative;
+}
+
+.pub-week-thumb-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 30%, rgba(0,0,0,0.15) 100%);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.pub-week-card:hover .pub-week-thumb-overlay {
+  opacity: 0.6;
 }
 
 /* Placeholder cuando no hay imagen — mismo ratio 16:9 */
@@ -128,6 +146,14 @@
   justify-content: center;
   color: var(--color-faint);
   font-size: 2rem;
+}
+
+/* Línea de acento debajo del placeholder */
+.footer-accent {
+  height: 3px;
+  background: var(--color-accent);
+  opacity: 0.15;
+  transition: opacity 0.3s ease;
 }
 
 /* Cuerpo de la tarjeta */

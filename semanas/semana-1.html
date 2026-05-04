@@ -1,33 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Semana 1 · Arquitectura de Software</title>
-
-  <!-- Google Fonts -->
+  <title>Semana 1 &middot; Arquitectura de Software</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap"
-    rel="stylesheet" />
-
-  <!-- Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-  <!-- Hojas de estilo del sistema -->
   <link rel="stylesheet" href="../css/reset.css" />
   <link rel="stylesheet" href="../css/variables.css" />
   <link rel="stylesheet" href="../css/layout.css" />
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/responsive.css" />
   <link rel="stylesheet" href="../css/three-bg.css" />
-
-  <!-- Estilos propios de la vista de detalle semanal -->
   <link rel="stylesheet" href="../css/semana-detail.css" />
 </head>
-
 <body>
   <script>
     (function () {
@@ -39,18 +27,19 @@
 
   <div id="three-bg" class="three-bg" aria-hidden="true"></div>
 
-  <!-- HEADER -->
   <header class="site-header">
     <div class="header-accent"></div>
     <div class="header-inner">
       <a href="../index.html" class="header-logo-link">
-        <img src="../assets/images/logo_universidad.png" alt="Logo Universidad" class="header-logo-img" data-src-light="../assets/images/logo_universidad.png" data-src-dark="../assets/images/logo_universidad_blanco.png" />
+        <img src="../assets/images/logo_universidad.png" alt="Logo Universidad" class="header-logo-img"
+          data-src-light="../assets/images/logo_universidad.png"
+          data-src-dark="../assets/images/logo_universidad_blanco.png" />
       </a>
       <div class="header-center">
-        <span class="header-portafolio-title">PORTAFOLIO</span>
+        <span class="header-portafolio-title">PORTFOLIO</span>
       </div>
       <div class="header-right">
-        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar a tema oscuro" title="Tema oscuro">
+        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Tema">
           <svg class="theme-toggle__icon theme-toggle__icon--moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
           </svg>
@@ -63,57 +52,17 @@
     </div>
   </header>
 
-  <main class="site-main detail-main">
-    <a href="../index.html" class="btn-back">← Volver al portafolio</a>
-
-    <div class="week-header">
-      <div class="week-eyebrow">Semana 01</div>
-      <h1 class="week-detail-title">Resumen de Arquitectura de Software</h1>
-    </div>
-
-    <!-- SECCIÓN 1: VISOR DE PDF -->
-    <section class="content-section">
-      <h2>1. Resumen de la clase</h2>
-      <p>A continuación se presenta el resumen de los temas abordados durante la primera semana. Puedes revisar el
-        documento de forma integrada aquí mismo:</p>
-
-      <iframe src="../assets/archivos/Sem01_Arquitectura_de_Software_Resumen.pdf" class="document-viewer"
-        title="Visor de PDF — Resumen Semana 1"></iframe>
-    </section>
-
-    <!-- SECCIÓN 2: ARCHIVOS DESCARGABLES -->
-    <section class="content-section">
-      <h2>2. Archivos y Entregables</h2>
-      <p>Descarga los documentos correspondientes a la semana en tu formato preferido:</p>
-
-      <div class="download-grid">
-        <a href="../assets/archivos/Sem01_Arquitectura_de_Software_Resumen.pdf" download class="download-card">
-          <i class="fa-solid fa-file-pdf" style="font-size: 2rem; color: #e74c3c;"></i>
-          <div class="download-info">
-            <span class="download-name">Sem01_Arquitectura...Resumen.pdf</span>
-            <span class="download-meta">Documento PDF · Descargar</span>
-          </div>
-        </a>
-
-        <a href="../assets/archivos/Sem01_Arquitectura_de_Software_Resumen.docx" download class="download-card">
-          <i class="fa-solid fa-file-word" style="font-size: 2rem; color: #2b579a;"></i>
-          <div class="download-info">
-            <span class="download-name">Sem01_Arquitectura...Resumen.docx</span>
-            <span class="download-meta">Documento Word · Descargar</span>
-          </div>
-        </a>
-      </div>
-    </section>
+  <main class="site-main detail-main" id="weekContent">
+    <!-- Contenido cargado dinámicamente por week-detail.js -->
   </main>
 
-  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="footer-accent"></div>
     <div class="footer-inner">
       <div class="footer-col">
         <span class="footer-heading">Autor</span>
         <span class="footer-line footer-line--name">Mosquera Zevallos Valerio</span>
-        <span class="footer-line">Elaboración propia</span>
+        <span class="footer-line">Elaboraci&oacute;n propia</span>
       </div>
       <div class="footer-col">
         <span class="footer-heading">Contacto</span>
@@ -124,8 +73,7 @@
       <div class="footer-col footer-col--social">
         <span class="footer-heading">Redes</span>
         <div class="footer-social-row">
-          <a href="https://linkedin.com/in/valerio-mosquera-zevallos-4b7884329" target="_blank" rel="noopener"
-            class="footer-social" title="LinkedIn">
+          <a href="https://linkedin.com/in/valerio-mosquera-zevallos-4b7884329" target="_blank" rel="noopener" class="footer-social" title="LinkedIn">
             <i class="fa-brands fa-linkedin-in fa-lg"></i>
             <span class="footer-social-label">LinkedIn</span>
           </a>
@@ -137,13 +85,16 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Mosquera Zevallos Valerio · Todos los derechos reservados</span>
+      <span>&copy; 2026 Mosquera Zevallos Valerio &middot; Todos los derechos reservados</span>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
   <script src="../js/theme.js"></script>
   <script src="../js/three-bg.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/week-detail.js"></script>
 </body>
-
 </html>
