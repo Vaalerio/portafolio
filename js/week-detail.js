@@ -145,9 +145,9 @@
       h += '<section class="content-section anim-fade" style="--s:' + (sIdx++) + '">';
       h += '<h2 class="section-heading">Material Visual</h2>';
       h += '<div class="image-gallery">';
-      images.forEach(function (img) {
+      images.forEach(function (img, idx) {
         h += '<figure class="gallery-figure">';
-        h += '<img src="' + resolveUrl(img.storage_path) + '" alt="' + (img.display_name || img.file_name) + '" loading="lazy">';
+        h += '<img src="' + resolveUrl(img.storage_path) + '" alt="' + (img.display_name || img.file_name) + '" loading="lazy" data-gallery-index="' + idx + '" style="cursor:pointer">';
         if (img.description) {
           h += '<figcaption class="gallery-caption">' + img.description + '</figcaption>';
         }
@@ -197,6 +197,7 @@
     }
 
     main.innerHTML = h;
+    initLightbox();
   }
 
   /* ═══════════════════════════════════════════════════
@@ -232,6 +233,81 @@
       '<span class="download-name">' + (f.display_name || f.file_name) + '</span>' +
       '<span class="download-meta">' + f.file_type.toUpperCase() + ' · Descargar</span>' +
       '</div></a>';
+  }
+
+  /* ═══════════════════════════════════════════════════
+     LIGHTBOX
+     ═══════════════════════════════════════════════════ */
+
+  var _lbOverlay, _lbImg, _lbCounter, _lbImages = [], _lbIdx = 0;
+
+  function initLightbox() {
+    // Collect all gallery images
+    _lbImages = Array.from(document.querySelectorAll('[data-gallery-index]'));
+    if (!_lbImages.length) return;
+
+    // Create overlay only once
+    if (!_lbOverlay) {
+      _lbOverlay = document.createElement('div');
+      _lbOverlay.className = 'lb-overlay';
+      _lbOverlay.innerHTML =
+        '<button class="lb-btn lb-close" aria-label="Cerrar">&times;</button>' +
+        '<button class="lb-btn lb-prev" aria-label="Anterior">&#8249;</button>' +
+        '<button class="lb-btn lb-next" aria-label="Siguiente">&#8250;</button>' +
+        '<img class="lb-img" />' +
+        '<span class="lb-counter"></span>';
+      document.body.appendChild(_lbOverlay);
+
+      _lbImg = _lbOverlay.querySelector('.lb-img');
+      _lbCounter = _lbOverlay.querySelector('.lb-counter');
+
+      // Events
+      _lbOverlay.querySelector('.lb-close').addEventListener('click', lbClose);
+      _lbOverlay.querySelector('.lb-prev').addEventListener('click', function () { lbGo(-1); });
+      _lbOverlay.querySelector('.lb-next').addEventListener('click', function () { lbGo(1); });
+      _lbOverlay.addEventListener('click', function (e) {
+        if (e.target === _lbOverlay) lbClose();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (!_lbOverlay.classList.contains('lb-open')) return;
+        if (e.key === 'Escape') lbClose();
+        if (e.key === 'ArrowLeft')  lbGo(-1);
+        if (e.key === 'ArrowRight') lbGo(1);
+      });
+    }
+
+    // Bind click on each image
+    _lbImages.forEach(function (img, i) {
+      img.addEventListener('click', function () { lbOpen(i); });
+    });
+  }
+
+  function lbOpen(idx) {
+    _lbIdx = idx;
+    lbUpdate();
+    _lbOverlay.classList.add('lb-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function lbClose() {
+    _lbOverlay.classList.remove('lb-open');
+    document.body.style.overflow = '';
+  }
+
+  function lbGo(dir) {
+    _lbIdx = (_lbIdx + dir + _lbImages.length) % _lbImages.length;
+    lbUpdate();
+  }
+
+  function lbUpdate() {
+    _lbImg.src = _lbImages[_lbIdx].src;
+    _lbImg.alt = _lbImages[_lbIdx].alt;
+    _lbCounter.textContent = (_lbIdx + 1) + ' / ' + _lbImages.length;
+    // Hide arrows if only 1 image
+    var multi = _lbImages.length > 1;
+    _lbOverlay.querySelector('.lb-prev').style.display = multi ? '' : 'none';
+    _lbOverlay.querySelector('.lb-next').style.display = multi ? '' : 'none';
+    _lbCounter.style.display = multi ? '' : 'none';
   }
 
   // Boot
