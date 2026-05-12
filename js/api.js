@@ -148,6 +148,18 @@ var Api = (function () {
     /* ── Assets (archivos) ── */
 
     /**
+     * Sanitiza un nombre de archivo para Storage.
+     * Elimina acentos, espacios y caracteres especiales.
+     */
+    _safeName: function (name) {
+      return name
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")   // quitar acentos
+        .replace(/\s+/g, "_")                                // espacios → _
+        .replace(/[^a-zA-Z0-9._-]/g, "")                    // solo alfanuméricos, punto, guion, _
+        .replace(/_{2,}/g, "_");                             // doble _ → simple
+    },
+
+    /**
      * Sube un archivo al bucket y crea un registro en week_assets.
      * @param {object} opts
      * @param {number} opts.weekId
@@ -160,7 +172,8 @@ var Api = (function () {
      */
     async uploadAsset(opts) {
       var sb = _sb();
-      var storagePath = "week-" + opts.weekNumber + "/" + Date.now() + "_" + opts.file.name;
+      var safeName = this._safeName(opts.file.name);
+      var storagePath = "week-" + opts.weekNumber + "/" + Date.now() + "_" + safeName;
 
       var { error: uploadError } = await sb.storage
         .from(BUCKET)
@@ -193,7 +206,8 @@ var Api = (function () {
      */
     async uploadCoverImage(weekId, file, weekNumber) {
       var sb = _sb();
-      var storagePath = "week-" + weekNumber + "/cover_" + Date.now() + "_" + file.name;
+      var safeName = this._safeName(file.name);
+      var storagePath = "week-" + weekNumber + "/cover_" + Date.now() + "_" + safeName;
 
       var { error: upErr } = await sb.storage
         .from(BUCKET)

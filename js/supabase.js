@@ -8,7 +8,7 @@
  */
 (function () {
   var SUPABASE_URL  = "https://ykzsdyhaeckiseqsouhs.supabase.co";
-  var SUPABASE_ANON = "sb_publishable_fuSjAY7xMG6bScTBE0iEmw_YgHxVNe9";
+  var SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlrenNkeWhhZWNraXNlcXNvdWhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MzM0MjMsImV4cCI6MjA5MjMwOTQyM30.4LC7KSwY0NxOXIrqmV1WnY5WFKPni2DPoe1jJ34Lxkg";
 
   if (typeof window.supabase === "undefined" || !window.supabase.createClient) {
     console.error("[supabase] La librería supabase-js no está cargada.");
