@@ -1,77 +1,101 @@
-/* ─── DESIGN TOKENS ──────────────────────────────────────────
-   Paleta inspirada en brand-guidelines (Anthropic):
-   Base neutra cálida + acento naranja + tipografía editorial
-──────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN TOKENS — Sistema de diseño
+   Paleta neutra cálida + acento terracota + tipografía editorial
+   ═══════════════════════════════════════════════════════════════ */
+
 :root {
 
-  /* Colores base */
-  --color-bg: #faf9f5;
-  /* crema cálido */
-  --color-surface: #ffffff;
-  --color-surface2: #f3f2ed;
-  --color-border: #e4e2d9;
-  --color-border-lt: #eeede8;
+  /* ── Superficies ── */
+  --color-bg:        #f8f7f4;
+  --color-surface:   #ffffff;
+  --color-surface2:  #f0efeb;
+  --color-surface3:  #e8e7e2;
+  --color-border:    #dddbd4;
+  --color-border-lt: #eae8e3;
 
-  /* Texto */
-  --color-text: #141413;
-  /* casi negro */
-  --color-muted: #7a7870;
-  --color-faint: #b0aea5;
+  /* ── Texto ── */
+  --color-text:   #1a1918;
+  --color-muted:  #74726a;
+  --color-faint:  #a8a69e;
 
-  /* Acento principal: naranja Anthropic */
-  --color-accent: #d97757;
-  --color-accent-lt: #f2ddd6;
-  --color-accent-dk: #b85e3e;
+  /* ── Acento principal: terracota ── */
+  --color-accent:    #c96b4f;
+  --color-accent-lt: #f3ddd5;
+  --color-accent-dk: #a85639;
 
-  /* Acento secundario: azul Anthropic */
-  --color-blue: #6a9bcc;
-  --color-blue-lt: #ddeaf6;
+  /* ── Acento secundario: azul acero ── */
+  --color-blue:    #5a8ab5;
+  --color-blue-lt: #d8e6f2;
 
-  /* Acento terciario: verde Anthropic */
-  --color-green: #788c5d;
-  --color-green-lt: #dfe8d2;
+  /* ── Acento terciario: verde salvia ── */
+  --color-green:    #6d8c5e;
+  --color-green-lt: #dce8d4;
 
-  /* Colores por unidad */
-  --unit1: #d97757;
-  /* naranja */
-  --unit2: #6a9bcc;
-  /* azul */
-  --unit3: #788c5d;
-  /* verde */
-  --unit4: #141413;
-  /* negro */
+  /* ── Unidades ── */
+  --unit1: var(--color-accent);
+  --unit2: var(--color-blue);
+  --unit3: var(--color-green);
+  --unit4: var(--color-text);
 
-  /* Tipografía */
+  /* ── Tipografía ── */
   --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
 
-  /* Espaciado */
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 40px;
+  /* ── Espaciado ── */
+  --space-2xs:  2px;
+  --space-xs:   4px;
+  --space-sm:   8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  40px;
   --space-2xl: 64px;
   --space-3xl: 96px;
+  --space-4xl: 128px;
 
-  /* Radios */
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 18px;
+  /* ── Radios ── */
+  --radius-xs:  4px;
+  --radius-sm:  8px;
+  --radius-md:  14px;
+  --radius-lg:  20px;
+  --radius-xl:  28px;
+  --radius-full: 9999px;
 
-  /* Sombras */
-  --shadow-sm: 0 1px 3px rgba(20, 20, 19, .06);
-  --shadow-md: 0 4px 16px rgba(20, 20, 19, .08);
-  --shadow-lg: 0 8px 32px rgba(20, 20, 19, .10);
+  /* ── Sombras ── */
+  --shadow-xs:  0 1px 2px rgba(20,20,19,.04);
+  --shadow-sm:  0 1px 4px rgba(20,20,19,.06), 0 1px 2px rgba(20,20,19,.04);
+  --shadow-md:  0 4px 16px rgba(20,20,19,.07), 0 1px 3px rgba(20,20,19,.05);
+  --shadow-lg:  0 8px 32px rgba(20,20,19,.08), 0 2px 6px rgba(20,20,19,.04);
+  --shadow-xl:  0 16px 48px rgba(20,20,19,.10), 0 4px 12px rgba(20,20,19,.06);
+  --shadow-focus: 0 0 0 3px var(--color-accent-lt);
 
-  /* Transiciones */
-  --transition: .2s ease;
+  /* ── Motion system ── */
+  --duration-fast:    120ms;
+  --duration-base:    200ms;
+  --duration-slow:    350ms;
+  --duration-slower:  500ms;
+  --duration-stagger: 60ms;
 
-  /* Header (glass) — tokens para tema claro */
-  --header-bg: rgba(250, 249, 245, 0.85);
-  --header-bg-scrolled: rgba(250, 249, 245, 0.95);
+  --ease-out:    cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.15, 1);
 
-  /* Footer — hereda del tema (claro: superficie clara + texto oscuro) */
+  --transition:      var(--duration-base) ease;
+  --transition-slow: var(--duration-slow) var(--ease-out);
+
+  --hover-lift:  -4px;
+  --hover-scale: 1.02;
+
+  /* ── Typography rhythm ── */
+  --leading-tight:  1.2;
+  --leading-normal: 1.6;
+  --leading-loose:  1.85;
+  --measure:        65ch;
+
+  /* ── Header glass ── */
+  --header-bg: rgba(248, 247, 244, 0.82);
+  --header-bg-scrolled: rgba(248, 247, 244, 0.96);
+
+  /* ── Footer ── */
   --footer-bg: var(--color-surface2);
   --footer-fg: var(--color-text);
   --footer-muted: var(--color-muted);
@@ -86,38 +110,42 @@
   --footer-on-accent: var(--color-bg);
 }
 
-/* ─── Tema oscuro ─────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   DARK THEME
+   ═══════════════════════════════════════════════════════════════ */
 .dark {
-  --color-bg: #1c1b18;
-  --color-surface: #252420;
-  --color-surface2: #1c1b18f2;
-  --color-border: #3d3a34;
-  --color-border-lt: #35322d;
+  --color-bg:        #18171a;
+  --color-surface:   #222125;
+  --color-surface2:  #1e1d20;
+  --color-surface3:  #2a292d;
+  --color-border:    #38363d;
+  --color-border-lt: #302f34;
 
-  --color-text: #f2f0ea;
-  --color-muted: #9c988c;
-  --color-faint: #6b675e;
+  --color-text:   #edecea;
+  --color-muted:  #908e87;
+  --color-faint:  #5e5c56;
 
-  --color-accent: #e8957a;
-  --color-accent-lt: #3d2e28;
+  --color-accent:    #e0916e;
+  --color-accent-lt: #3a2920;
   --color-accent-dk: #f0a88a;
 
-  --color-blue: #8ab4e8;
-  --color-blue-lt: #2a3444;
+  --color-blue:    #82b4e2;
+  --color-blue-lt: #252e3a;
 
-  --color-green: #9db88a;
-  --color-green-lt: #2d3428;
+  --color-green:   #96b686;
+  --color-green-lt: #272e22;
 
-  --unit4: #f2f0ea;
+  --unit4: var(--color-text);
 
-  --header-bg: rgba(28, 27, 24, 0.88);
-  --header-bg-scrolled: rgba(28, 27, 24, 0.95);
+  --header-bg: rgba(24, 23, 26, 0.85);
+  --header-bg-scrolled: rgba(24, 23, 26, 0.96);
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-xs:  0 1px 2px rgba(0,0,0,.20);
+  --shadow-sm:  0 1px 4px rgba(0,0,0,.25);
+  --shadow-md:  0 4px 16px rgba(0,0,0,.30);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,.35);
+  --shadow-xl:  0 16px 48px rgba(0,0,0,.45);
 
-  /* Footer — misma lógica semántica (oscuro: superficie + texto del tema) */
   --footer-bg: var(--color-surface2);
   --footer-fg: var(--color-text);
   --footer-muted: var(--color-muted);

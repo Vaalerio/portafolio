@@ -1,95 +1,124 @@
-/* ─── ADMIN SECTION ─────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   ADMIN PANEL — CMS-style administration interface
+   ═══════════════════════════════════════════════════════════════ */
+
 .section--admin {
-  padding-top: var(--space-xl);
-  min-height: auto;
+  padding-top: var(--space-md);
 }
 
 .admin-header {
   margin-bottom: var(--space-xl);
-  padding-bottom: var(--space-md);
-  border-bottom: 1px solid var(--color-border);
 }
 
 .admin-title {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-xs);
 }
 
-.admin-sub {
-  font-size: .875rem;
+.admin-subtitle {
+  font-size: .88rem;
   color: var(--color-muted);
-  margin-top: 4px;
+  line-height: 1.5;
 }
 
-/* ── Admin Grid ── */
+/* ── Layout grid (formulario + sidebar) ── */
 .admin-grid {
   display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: var(--space-lg);
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-xl);
   align-items: start;
 }
 
-/* ── Form card ── */
-.admin-form-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
+/* ── Formulario principal ── */
+.admin-form-area {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
-  box-shadow: var(--shadow-sm);
-}
-
-/* ── Side cards ── */
-.admin-side {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  position: sticky;
-  top: 80px;
+  gap: var(--space-lg);
 }
 
 .admin-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: var(--space-lg);
+  box-shadow: var(--shadow-xs);
+  transition: box-shadow .3s ease, border-color .3s ease;
+}
+
+.admin-card:hover {
   box-shadow: var(--shadow-sm);
 }
 
-/* ── Preview box ── */
-.preview-box {
-  background: var(--color-surface2);
-  border-radius: var(--radius-sm);
-  padding: var(--space-md);
-  font-size: .85rem;
-  line-height: 1.65;
-  min-height: 100px;
-  color: var(--color-text);
+/* ── Sidebar ── */
+.admin-side {
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
 }
 
-.preview-empty {
-  color: var(--color-faint);
-  font-style: italic;
+.admin-side-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ── Selectores de unidad/semana ── */
+.admin-selectors {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+/* ── Sub-secciones (actividades, videos, etc.) ── */
+.admin-subsection {
+  border-top: 1px solid var(--color-border-lt);
+  padding-top: var(--space-lg);
+}
+
+.admin-subsection-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.admin-subsection-title {
+  font-family: var(--font-body);
   font-size: .82rem;
-}
-
-.preview-box strong {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 1rem;
-  margin-bottom: var(--space-sm);
-}
-
-.preview-meta {
-  font-size: .72rem;
-  color: var(--color-accent);
-  font-weight: 600;
-  letter-spacing: .05em;
+  font-weight: 700;
+  letter-spacing: .06em;
   text-transform: uppercase;
-  margin-bottom: var(--space-sm);
+  color: var(--color-muted);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-add-btn {
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  background: var(--color-accent-lt);
+  border: none;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all .25s ease;
+  letter-spacing: .02em;
+}
+
+.admin-add-btn:hover {
+  background: var(--color-accent);
+  color: var(--color-bg);
 }
 
 /* ── Loaded list ── */
@@ -97,7 +126,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  max-height: 320px;
+  max-height: 360px;
   overflow-y: auto;
 }
 
@@ -110,10 +139,13 @@
   background: var(--color-surface2);
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-border-lt);
-  transition: border-color var(--transition);
+  transition: border-color .2s ease, background .2s ease;
 }
 
-.loaded-item:hover { border-color: var(--color-border); }
+.loaded-item:hover {
+  border-color: var(--color-border);
+  background: var(--color-surface);
+}
 
 .loaded-info {
   flex: 1;
@@ -121,111 +153,91 @@
 }
 
 .loaded-meta {
-  font-size: .68rem;
+  font-size: .65rem;
   font-weight: 600;
   letter-spacing: .06em;
   color: var(--color-faint);
   text-transform: uppercase;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 
 .loaded-title {
-  font-size: .83rem;
+  font-size: .85rem;
   font-weight: 500;
   color: var(--color-text);
-}
-
-.loaded-del {
-  color: var(--color-faint);
-  font-size: .9rem;
-  padding: 4px 8px;
-  border-radius: var(--radius-sm);
-  transition: color var(--transition), background var(--transition);
-}
-
-.loaded-del:hover {
-  color: var(--color-accent);
-  background: var(--color-accent-lt);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .loaded-empty {
   font-size: .82rem;
   color: var(--color-faint);
+  padding: var(--space-md);
+  text-align: center;
   font-style: italic;
-  padding: var(--space-sm) 0;
 }
 
-/* ── Admin Sub-sections (Activities, Files, Videos, Links) ── */
-.admin-subsection {
-  margin-top: var(--space-lg);
-  padding-top: var(--space-lg);
-  border-top: 1px solid var(--color-border-lt);
-}
-
-.admin-subsection-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--space-sm);
-}
-
-.admin-subsection-title {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-text);
-}
-
-.admin-add-btn {
-  font-size: .78rem;
-  font-weight: 600;
-  color: var(--color-accent);
-  background: var(--color-accent-lt);
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  padding: 4px 12px;
+/* ── Delete button ── */
+.loaded-del {
+  background: none;
+  border: none;
+  color: var(--color-faint);
+  font-size: .82rem;
   cursor: pointer;
-  transition: all var(--transition);
+  padding: 4px 8px;
+  border-radius: var(--radius-xs);
+  transition: all .2s ease;
+  flex-shrink: 0;
 }
 
-.admin-add-btn:hover {
-  background: var(--color-accent);
-  color: var(--color-bg);
+.loaded-del:hover {
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.08);
 }
 
 /* ── Cover preview ── */
 .cover-preview-box {
   background: var(--color-surface2);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   padding: var(--space-sm);
   min-height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .cover-preview-img {
   width: 100%;
   max-height: 200px;
   object-fit: cover;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-xs);
 }
 
-/* ── Botón eliminar en items ── */
-.loaded-del {
-  background: none;
-  border: none;
-  color: var(--color-muted);
-  font-size: .85rem;
+/* ── File upload area ── */
+.field-input[type="file"] {
+  padding: 9px 12px;
+  font-size: .82rem;
+}
+
+.field-input[type="file"]::file-selector-button {
+  font-family: var(--font-body);
+  font-size: .78rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  background: var(--color-surface);
+  color: var(--color-text);
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: var(--radius-sm);
-  transition: all 0.2s ease;
-  flex-shrink: 0;
+  margin-right: var(--space-sm);
+  transition: all .2s ease;
 }
 
-.loaded-del:hover {
-  color: #e74c3c;
-  background: rgba(231, 76, 60, 0.1);
+.field-input[type="file"]::file-selector-button:hover {
+  background: var(--color-accent-lt);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }

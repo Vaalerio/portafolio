@@ -1,24 +1,34 @@
-/* ─── RESPONSIVE ─────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — Breakpoints progresivos
+   ═══════════════════════════════════════════════════════════════ */
 
-/* Tablet */
+/* ── Tablet landscape ── */
 @media (max-width: 1024px) {
   .weeks-public-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
+/* ── Tablet portrait ── */
 @media (max-width: 900px) {
   .header-inner { padding: 0 var(--space-lg); }
   .site-main    { padding: 0 var(--space-lg); }
 
-  .admin-grid {
-    grid-template-columns: 1fr;
-  }
-
+  .admin-grid { grid-template-columns: 1fr; }
   .admin-side { position: static; }
 
   .weeks-public-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home-hero {
+    padding: var(--space-xl) 0 var(--space-md);
+    margin-bottom: var(--space-xl);
+  }
+
+  .home-units-bar {
+    flex-wrap: wrap;
+    gap: var(--space-sm);
   }
 
   .footer-inner {
@@ -27,16 +37,11 @@
     gap: var(--space-lg);
   }
 
-  .footer-col--social {
-    justify-content: center;
-  }
-
-  .footer-social-row {
-    justify-content: center;
-  }
+  .footer-col--social { justify-content: center; }
+  .footer-social-row  { justify-content: center; }
 }
 
-/* Mobile */
+/* ── Mobile ── */
 @media (max-width: 600px) {
   .header-inner {
     padding: 0 var(--space-md);
@@ -48,30 +53,52 @@
     letter-spacing: .1em;
   }
 
-  .header-subtitle {
-    display: none;
-  }
+  .header-subtitle { display: none; }
+  .header-logo-img { height: 30px; }
 
-  .header-logo-img {
-    height: 30px;
-  }
-
-  /* En móvil: sólo mostrar el ícono del botón */
   .nav-cta span,
   .nav-logout span,
   .nav-admin span { display: none; }
 
   .nav-link { padding: 8px 12px; }
-
   .site-main { padding: 0 var(--space-md); }
 
-  .weeks-public-grid { grid-template-columns: 1fr; }
+  .weeks-public-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .pub-week-body { padding: var(--space-sm) var(--space-sm) var(--space-md); }
+  .pub-week-title { font-size: .92rem; }
+  .pub-week-summary { display: none; }
+  .pub-week-arrow { display: none; }
+
+  .home-hero {
+    padding: var(--space-lg) 0 var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+
+  .home-title { margin-bottom: var(--space-md); }
+
+  .home-units-bar {
+    gap: var(--space-xs);
+    margin-bottom: var(--space-lg);
+  }
+
+  .unit-badge {
+    font-size: .6rem;
+    padding: 4px 10px;
+  }
 
   .field-row { grid-template-columns: 1fr; }
-
   .login-box { padding: var(--space-lg); }
-
   .login-logo { height: 48px; }
-
   .toast { left: var(--space-md); right: var(--space-md); bottom: var(--space-lg); }
+}
+
+/* ── Small mobile ── */
+@media (max-width: 400px) {
+  .weeks-public-grid {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,41 +1,43 @@
-/* ─── COMPONENTS ───────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   COMPONENTS — Botones, inputs, toast, toggles
+   ═══════════════════════════════════════════════════════════════ */
 
-/* ── Buttons ── */
+/* ── Botones ── */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   background: var(--color-text);
   color: var(--color-bg);
   font-family: var(--font-body);
-  font-size: .9rem;
+  font-size: .88rem;
   font-weight: 600;
-  padding: 12px 28px;
+  padding: 11px 26px;
   border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
-  transition: background .25s ease, transform .2s ease, box-shadow .25s ease;
+  transition: background .25s ease, transform .2s var(--ease-out), box-shadow .25s ease;
   position: relative;
   overflow: hidden;
+  letter-spacing: .01em;
 }
 
 .btn-primary::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255,255,255,.12);
+  background: rgba(255,255,255,.10);
   transform: translateX(-100%);
-  transition: transform .4s ease;
+  transition: transform .4s var(--ease-out);
 }
 
-.btn-primary:hover::after {
-  transform: translateX(0);
-}
+.btn-primary:hover::after { transform: translateX(0); }
 
 .btn-primary:hover {
   background: var(--color-accent-dk);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(217,119,87,.25);
+  box-shadow: 0 6px 20px rgba(201,107,79,.20);
 }
 
 .btn-primary:active {
@@ -43,9 +45,37 @@
   box-shadow: none;
 }
 
+.btn-primary:disabled {
+  opacity: .5;
+  pointer-events: none;
+}
+
 .btn-full { width: 100%; }
 
-/* ── Form fields ── */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: .85rem;
+  font-weight: 500;
+  padding: 9px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.btn-ghost:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: var(--color-accent-lt);
+}
+
+/* ── Inputs ── */
 .field-group {
   display: flex;
   flex-direction: column;
@@ -53,50 +83,42 @@
 }
 
 .field-label {
-  font-size: .75rem;
+  font-size: .72rem;
   font-weight: 600;
-  letter-spacing: .06em;
+  letter-spacing: .07em;
   color: var(--color-muted);
   text-transform: uppercase;
 }
 
-.field-input {
-  background: var(--color-surface2);
-  border: 1px solid var(--color-border);
-  color: var(--color-text);
-  padding: 11px 14px;
-  border-radius: var(--radius-sm);
-  font-size: .9rem;
-  outline: none;
-  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
-  width: 100%;
-}
-
-.field-input:focus {
-  border-color: var(--color-accent);
-  background: var(--color-surface);
-  box-shadow: 0 0 0 3px var(--color-accent-lt);
-}
-
+.field-input,
 .field-textarea {
   background: var(--color-surface2);
   border: 1px solid var(--color-border);
   color: var(--color-text);
   padding: 11px 14px;
   border-radius: var(--radius-sm);
-  font-size: .9rem;
-  outline: none;
-  resize: vertical;
-  width: 100%;
-  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  font-size: .88rem;
   font-family: var(--font-body);
+  outline: none;
+  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  width: 100%;
+}
+
+.field-textarea {
+  resize: vertical;
   line-height: 1.6;
 }
 
+.field-input:focus,
 .field-textarea:focus {
   border-color: var(--color-accent);
   background: var(--color-surface);
-  box-shadow: 0 0 0 3px var(--color-accent-lt);
+  box-shadow: var(--shadow-focus);
+}
+
+.field-input::placeholder,
+.field-textarea::placeholder {
+  color: var(--color-faint);
 }
 
 .field-hint {
@@ -124,23 +146,24 @@
 /* ── Toast ── */
 .toast {
   position: fixed;
-  bottom: 32px;
-  right: 32px;
+  bottom: 28px;
+  right: 28px;
   background: var(--color-text);
   color: var(--color-bg);
-  padding: 14px 24px;
+  padding: 13px 22px;
   border-radius: var(--radius-md);
-  font-size: .875rem;
+  font-size: .85rem;
   font-weight: 500;
-  z-index: 999;
+  z-index: 9998;
   transform: translateY(80px);
   opacity: 0;
-  transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .35s ease;
+  transition: transform .4s var(--ease-out), opacity .35s ease;
   pointer-events: none;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-xl);
   display: flex;
   align-items: center;
   gap: 8px;
+  letter-spacing: .01em;
 }
 
 .toast.show {
@@ -148,30 +171,30 @@
   opacity: 1;
 }
 
-/* ── Botón de tema (Premium Toggle) ── */
+/* ── Theme Toggle ── */
 .theme-toggle {
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   padding: 0;
   border: 1px solid var(--color-border);
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   background: var(--color-surface);
   color: var(--color-text);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: var(--shadow-sm);
+  transition: all .3s var(--ease-out);
+  box-shadow: var(--shadow-xs);
 }
 
 .theme-toggle:hover {
   color: var(--color-accent);
   background: var(--color-surface2);
   border-color: var(--color-border-lt);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
 .theme-toggle:active {

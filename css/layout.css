@@ -39,7 +39,7 @@ html.theme-ready body {
 
 /* Línea decorativa gradiente superior */
 .header-accent {
-  height: 3px;
+  height: 2px;
   background: linear-gradient(90deg, var(--color-accent), var(--color-blue), var(--color-green));
 }
 
@@ -82,7 +82,7 @@ html.theme-ready body {
   height: 44px;
   width: auto;
   object-fit: contain;
-  transition: transform .3s cubic-bezier(.25, .46, .45, .94);
+  transition: transform .3s var(--ease-out);
 }
 
 .header-logo-link:hover .header-logo-img {
@@ -165,7 +165,7 @@ html.theme-ready body {
 .nav-cta:hover {
   background: var(--color-accent-dk) !important;
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(217, 119, 87, .25);
+  box-shadow: 0 4px 14px rgba(201,107,79,.22);
 }
 
 .nav-admin {
@@ -216,7 +216,7 @@ html.theme-ready body {
 
 /* Línea decorativa de acento (gradiente naranja → azul) */
 .footer-accent {
-  height: 3px;
+  height: 2px;
   background: linear-gradient(90deg, var(--color-accent), var(--color-blue), var(--color-green));
 }
 
