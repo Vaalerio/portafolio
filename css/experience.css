@@ -1,0 +1,302 @@
+/* ═══════════════════════════════════════════════════════════════
+   EXPERIENCE — Progress bar, week nav, command palette, back-to-top
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 1. READING PROGRESS BAR ── */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.reading-progress__fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-blue));
+  transition: width 60ms linear;
+  border-radius: 0 1px 1px 0;
+}
+
+/* ── 2. WEEK NAVIGATION ── */
+.week-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-border-lt);
+}
+
+.week-nav__link {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: all var(--duration-slow) var(--ease-out);
+  background: var(--color-surface);
+}
+
+.week-nav__link:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.week-nav__link--disabled {
+  visibility: hidden;
+}
+
+.week-nav__next {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.week-nav__label {
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.week-nav__week {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-text);
+  transition: color var(--duration-base) ease;
+}
+
+.week-nav__link:hover .week-nav__week {
+  color: var(--color-accent);
+}
+
+/* ── 3. COMMAND PALETTE ── */
+.cmd-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: min(20vh, 140px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-base) ease, visibility var(--duration-base) ease;
+}
+
+.cmd-overlay.cmd-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cmd-dialog {
+  width: 100%;
+  max-width: 560px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl), 0 0 0 1px rgba(0,0,0,.05);
+  overflow: hidden;
+  transform: scale(0.97) translateY(-8px);
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.cmd-open .cmd-dialog {
+  transform: scale(1) translateY(0);
+}
+
+/* Input */
+.cmd-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--color-border-lt);
+  color: var(--color-muted);
+}
+
+.cmd-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  font-size: .95rem;
+  font-family: var(--font-body);
+  outline: none;
+}
+
+.cmd-input::placeholder {
+  color: var(--color-faint);
+}
+
+.cmd-kbd {
+  font-size: .6rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface2);
+  color: var(--color-faint);
+  line-height: 1;
+}
+
+/* Results list */
+.cmd-list {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: var(--space-xs) 0;
+}
+
+.cmd-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background var(--duration-fast) ease;
+}
+
+.cmd-item:hover,
+.cmd-item--active {
+  background: var(--color-surface2);
+}
+
+.cmd-item--active {
+  background: var(--color-accent-lt);
+}
+
+.cmd-item__icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+}
+
+.cmd-item__text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.cmd-item__title {
+  font-size: .88rem;
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cmd-item__meta {
+  font-size: .7rem;
+  color: var(--color-faint);
+}
+
+.cmd-item__week {
+  font-size: .68rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  flex-shrink: 0;
+  letter-spacing: .04em;
+}
+
+.cmd-empty {
+  text-align: center;
+  padding: var(--space-xl);
+  color: var(--color-faint);
+  font-size: .88rem;
+}
+
+/* Footer */
+.cmd-footer {
+  display: flex;
+  gap: var(--space-lg);
+  padding: var(--space-sm) var(--space-lg);
+  border-top: 1px solid var(--color-border-lt);
+  background: var(--color-surface2);
+  font-size: .65rem;
+  color: var(--color-faint);
+}
+
+.cmd-footer kbd {
+  font-size: .58rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  padding: 1px 4px;
+  border-radius: 3px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  margin-right: 2px;
+}
+
+/* ── 4. BACK TO TOP ── */
+.btt {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: all var(--duration-slow) var(--ease-out);
+  box-shadow: var(--shadow-sm);
+  z-index: 90;
+}
+
+.btt--show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.btt:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* ── HEADER SEARCH BUTTON ── */
+.nav-search {
+  gap: 4px;
+}
+
+.nav-search .cmd-kbd {
+  pointer-events: none;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .cmd-dialog { max-width: calc(100vw - 32px); }
+  .cmd-overlay { padding-top: var(--space-xl); }
+  .week-nav { grid-template-columns: 1fr; gap: var(--space-sm); }
+  .week-nav__next { text-align: left; align-items: flex-start; }
+  .btt { bottom: 16px; right: 16px; width: 36px; height: 36px; }
+  .nav-search .cmd-kbd { display: none; }
+}
