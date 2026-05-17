@@ -46,7 +46,10 @@
   border-radius: var(--radius-md);
   padding: var(--space-lg);
   box-shadow: var(--shadow-xs);
-  transition: box-shadow .3s ease, border-color .3s ease;
+  transition: box-shadow var(--duration-slow) ease, border-color var(--duration-base) ease;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
 }
 
 .admin-card:hover {

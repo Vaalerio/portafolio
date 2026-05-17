@@ -157,55 +157,60 @@
     <!-- ── ADMIN ──────────────────────────────────────── -->
     <section id="adminSection" class="section section--admin hidden">
       <div class="admin-header">
-        <h2 class="admin-title">Panel de administrador</h2>
+        <h2 class="admin-title">Panel de administración</h2>
+        <p class="admin-subtitle">Gestiona contenido, archivos y recursos de cada semana.</p>
       </div>
 
       <div class="admin-grid">
 
         <!-- Formulario principal -->
-        <div class="admin-form-card">
-          <h3 class="card-title">Editar semana</h3>
+        <div class="admin-form-area">
 
-          <div class="field-row">
-            <div class="field-group">
-              <label class="field-label">Unidad</label>
-              <select class="field-input" id="aUnit">
-                <option value="1">Unidad 1 — Fundamentos</option>
-                <option value="2">Unidad 2 — Patrones</option>
-                <option value="3">Unidad 3 — Diseño</option>
-                <option value="4">Unidad 4 — Proyecto</option>
-              </select>
+          <!-- Card: Selección + contenido -->
+          <div class="admin-card">
+            <h3 class="card-title">Editar semana</h3>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label">Unidad</label>
+                <select class="field-input" id="aUnit">
+                  <option value="1">Unidad 1 — Fundamentos</option>
+                  <option value="2">Unidad 2 — Patrones</option>
+                  <option value="3">Unidad 3 — Diseño</option>
+                  <option value="4">Unidad 4 — Proyecto</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Semana</label>
+                <select class="field-input" id="aWeek"></select>
+              </div>
             </div>
+
             <div class="field-group">
-              <label class="field-label">Semana</label>
-              <select class="field-input" id="aWeek"></select>
+              <label class="field-label">Tema / Título</label>
+              <input class="field-input" type="text" id="aTitle"
+                placeholder="Ej: Introducción a los patrones de diseño" />
             </div>
+
+            <div class="field-group">
+              <label class="field-label">Resumen (para la tarjeta)</label>
+              <input class="field-input" type="text" id="aSummary"
+                placeholder="Breve resumen de ~15 palabras…" />
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Descripción de la clase</label>
+              <textarea class="field-textarea" id="aDesc" rows="4"
+                placeholder="Resumen de lo visto en clase..."></textarea>
+            </div>
+
+            <button class="btn-primary btn-full" id="saveBtn">Guardar semana</button>
           </div>
 
-          <div class="field-group">
-            <label class="field-label">Tema / Título</label>
-            <input class="field-input" type="text" id="aTitle"
-              placeholder="Ej: Introducción a los patrones de diseño" />
-          </div>
-
-          <div class="field-group">
-            <label class="field-label">Resumen (para la tarjeta)</label>
-            <input class="field-input" type="text" id="aSummary"
-              placeholder="Breve resumen de ~15 palabras…" />
-          </div>
-
-          <div class="field-group">
-            <label class="field-label">Descripción de la clase</label>
-            <textarea class="field-textarea" id="aDesc" rows="4"
-              placeholder="Resumen de lo visto en clase..."></textarea>
-          </div>
-
-          <button class="btn-primary btn-full" id="saveBtn">Guardar semana</button>
-
-          <!-- ── Imagen de portada ── -->
-          <div class="admin-subsection">
+          <!-- Card: Portada -->
+          <div class="admin-card">
             <div class="admin-subsection-header">
-              <h4 class="admin-subsection-title">Imagen de portada</h4>
+              <h4 class="admin-subsection-title"><i class="fa-solid fa-image"></i> Imagen de portada</h4>
             </div>
             <div id="coverPreview" class="cover-preview-box">
               <span class="loaded-empty">Sin portada</span>
@@ -220,19 +225,19 @@
             </div>
           </div>
 
-          <!-- ── Actividades ── -->
-          <div class="admin-subsection">
+          <!-- Card: Actividades -->
+          <div class="admin-card">
             <div class="admin-subsection-header">
-              <h4 class="admin-subsection-title">Actividades</h4>
+              <h4 class="admin-subsection-title"><i class="fa-solid fa-list-check"></i> Actividades</h4>
               <button class="admin-add-btn" id="addActivityBtn" title="Agregar actividad">+ Agregar</button>
             </div>
             <div class="loaded-list" id="activitiesList"></div>
           </div>
 
-          <!-- ── Archivos ── -->
-          <div class="admin-subsection">
+          <!-- Card: Archivos -->
+          <div class="admin-card">
             <div class="admin-subsection-header">
-              <h4 class="admin-subsection-title">Archivos</h4>
+              <h4 class="admin-subsection-title"><i class="fa-solid fa-paperclip"></i> Archivos</h4>
             </div>
             <div class="loaded-list" id="assetsList"></div>
             <div class="field-row" style="margin-top: var(--space-sm);">
@@ -246,19 +251,19 @@
             </div>
           </div>
 
-          <!-- ── Videos ── -->
-          <div class="admin-subsection">
+          <!-- Card: Videos -->
+          <div class="admin-card">
             <div class="admin-subsection-header">
-              <h4 class="admin-subsection-title">Videos de YouTube</h4>
+              <h4 class="admin-subsection-title"><i class="fa-brands fa-youtube"></i> Videos de YouTube</h4>
               <button class="admin-add-btn" id="addVideoBtn" title="Agregar video">+ Agregar</button>
             </div>
             <div class="loaded-list" id="videosList"></div>
           </div>
 
-          <!-- ── Enlaces ── -->
-          <div class="admin-subsection">
+          <!-- Card: Enlaces -->
+          <div class="admin-card">
             <div class="admin-subsection-header">
-              <h4 class="admin-subsection-title">Enlaces externos</h4>
+              <h4 class="admin-subsection-title"><i class="fa-solid fa-link"></i> Enlaces externos</h4>
               <button class="admin-add-btn" id="addLinkBtn" title="Agregar enlace">+ Agregar</button>
             </div>
             <div class="loaded-list" id="linksList"></div>
