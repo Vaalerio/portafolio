@@ -4,7 +4,7 @@
 
 /* ── Tablet landscape ── */
 @media (max-width: 1024px) {
-  .weeks-public-grid {
+  .pub-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -17,7 +17,7 @@
   .admin-grid { grid-template-columns: 1fr; }
   .admin-side { position: static; }
 
-  .weeks-public-grid {
+  .pub-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -75,9 +75,22 @@
 
   .site-main { padding: 0 var(--space-md); }
 
-  .weeks-public-grid {
+  .pub-grid {
     grid-template-columns: 1fr 1fr;
     gap: var(--space-sm);
+  }
+  
+  .unit-section {
+    padding: var(--space-sm) 0 0 0;
+    gap: var(--space-sm);
+  }
+  
+  .unit-section:first-child {
+    padding-top: 0;
+  }
+  
+  .unit-label {
+    font-size: 1.4rem;
   }
 
   .pub-week-body { padding: var(--space-sm) var(--space-sm) var(--space-md); }

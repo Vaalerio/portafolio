@@ -34,23 +34,34 @@ html.theme-ready body {
   background: var(--header-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  transition: box-shadow .35s ease, background .35s ease;
+  transition: all var(--duration-slow) var(--ease-out);
+  view-transition-name: site-header;
 }
 
 /* Línea decorativa gradiente superior */
 .header-accent {
   height: 2px;
   background: linear-gradient(90deg, var(--color-accent), var(--color-blue), var(--color-green));
+  transition: opacity var(--duration-slow) ease;
 }
 
-/* Sombra al hacer scroll */
+/* Sombra al hacer scroll (Floating Dock) */
 .site-header.scrolled {
   background: var(--header-bg-scrolled);
-  box-shadow: 0 4px 24px rgba(20, 20, 19, 0.07);
+  box-shadow: 0 12px 32px rgba(20, 20, 19, 0.1);
+  margin: var(--space-sm) var(--space-md) 0;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-lt);
+  top: var(--space-sm);
+  backdrop-filter: blur(24px);
+}
+.site-header.scrolled .header-accent {
+  opacity: 0; /* Ocultar línea dura en modo dock */
 }
 
 .dark .site-header.scrolled {
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255,255,255,0.05);
 }
 
 .header-inner {

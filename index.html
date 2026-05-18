@@ -160,9 +160,12 @@
 
     <!-- ── ADMIN ──────────────────────────────────────── -->
     <section id="adminSection" class="section section--admin hidden">
-      <div class="admin-header">
-        <h2 class="admin-title">Panel de administración</h2>
-        <p class="admin-subtitle">Gestiona contenido, archivos y recursos de cada semana.</p>
+      <div class="admin-header" style="display:flex; justify-content:space-between; align-items:flex-end;">
+        <div>
+          <h2 class="admin-title">Panel de administración</h2>
+          <p class="admin-subtitle">Gestiona contenido, archivos y recursos de cada semana.</p>
+        </div>
+        <button class="btn-secondary" id="previewBtnTop"><i class="fa-solid fa-eye"></i> Vista previa</button>
       </div>
 
       <div class="admin-grid">
@@ -191,24 +194,35 @@
             </div>
 
             <div class="field-group">
-              <label class="field-label">Tema / Título</label>
+              <label class="field-label" style="display:flex; justify-content:space-between; align-items:baseline;">
+                Tema / Título
+                <span style="font-weight:400; font-size:0.8em; color:var(--color-faint);">Aparece como título principal</span>
+              </label>
               <input class="field-input" type="text" id="aTitle"
                 placeholder="Ej: Introducción a los patrones de diseño" />
             </div>
 
             <div class="field-group">
-              <label class="field-label">Resumen (para la tarjeta)</label>
+              <label class="field-label" style="display:flex; justify-content:space-between; align-items:baseline;">
+                Resumen
+                <span style="font-weight:400; font-size:0.8em; color:var(--color-faint);">Para la tarjeta del Home (~15 palabras)</span>
+              </label>
               <input class="field-input" type="text" id="aSummary"
                 placeholder="Breve resumen de ~15 palabras…" />
             </div>
 
             <div class="field-group">
-              <label class="field-label">Descripción de la clase</label>
+              <label class="field-label" style="display:flex; justify-content:space-between; align-items:baseline;">
+                Descripción de la clase
+                <span style="font-weight:400; font-size:0.8em; color:var(--color-faint);">Texto introductorio</span>
+              </label>
               <textarea class="field-textarea" id="aDesc" rows="4"
                 placeholder="Resumen de lo visto en clase..."></textarea>
             </div>
 
-            <button class="btn-primary btn-full" id="saveBtn">Guardar semana</button>
+            <div class="field-row" style="margin-top:var(--space-md);">
+              <button class="btn-primary" style="flex:1; transition:all 0.3s ease" id="saveBtn">Guardar semana</button>
+            </div>
           </div>
 
           <!-- Card: Portada -->

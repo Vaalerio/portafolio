@@ -50,6 +50,10 @@
   transform: translateY(-2px);
 }
 
+.week-nav__link:active {
+  view-transition-name: week-hero;
+}
+
 .week-nav__link--disabled {
   visibility: hidden;
 }
@@ -291,6 +295,61 @@
   pointer-events: none;
 }
 
+/* ── 5. CINEMATIC PAGE TRANSITIONS ── */
+@view-transition { navigation: auto; }
+
+::view-transition-old(root) {
+  animation: fade-out var(--duration-slow) var(--ease-in-out) forwards;
+}
+::view-transition-new(root) {
+  animation: fade-in var(--duration-slower) var(--ease-in-out) forwards;
+}
+
+@keyframes fade-out {
+  0% { opacity: 1; transform: scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: scale(0.98); filter: blur(4px); }
+}
+@keyframes fade-in {
+  0% { opacity: 0; transform: scale(1.02); filter: blur(4px); }
+  100% { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+/* Share header element across pages */
+.site-header { view-transition-name: site-header; }
+
+/* ── 6. SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--duration-slower) var(--ease-out), transform var(--duration-slower) var(--ease-out);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── 7. AMBIENT GLOW ── */
+.ambient-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle 600px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(201, 107, 79, 0.03), transparent);
+  opacity: 0;
+  transition: opacity var(--duration-slow) ease;
+}
+.ambient-glow.active { opacity: 1; }
+
+.dark .ambient-glow {
+  background: radial-gradient(circle 600px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(201, 107, 79, 0.06), transparent);
+}
+
+/* ── 8. HERO PARALLAX ── */
+.hero-parallax {
+  will-change: transform, opacity;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
   .cmd-dialog { max-width: calc(100vw - 32px); }
@@ -299,4 +358,54 @@
   .week-nav__next { text-align: left; align-items: flex-start; }
   .btt { bottom: 16px; right: 16px; width: 36px; height: 36px; }
   .nav-search .cmd-kbd { display: none; }
+  .ambient-glow { display: none; } /* Performance on mobile */
+}
+
+/* ══════════════════════════════════════════════════════
+   FOCUS MODE
+   ══════════════════════════════════════════════════════ */
+body {
+  transition: background-color 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#three-bg {
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.focus-mode #three-bg {
+  opacity: 0.18;
+  filter: blur(4px) grayscale(50%);
+}
+
+.ambient-glow {
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.focus-mode .ambient-glow {
+  opacity: 0.2;
+}
+
+body.focus-mode .detail-main {
+  max-width: 720px;
+}
+
+.detail-main {
+  transition: max-width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.focus-mode .pub-week-card::before,
+body.focus-mode .p-nav-card::before,
+body.focus-mode .link-card::before,
+body.focus-mode .activity-card::before,
+body.focus-mode .download-card::before,
+body.focus-mode .gallery-figure::before {
+  opacity: 0.02 !important;
+}
+
+.focus-mode-btn {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  line-height: 1;
+  width: 40px;
+  height: 40px;
 }

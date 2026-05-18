@@ -82,15 +82,77 @@
 
 /* ── Grid principal ── */
 .weeks-public-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  margin-bottom: var(--space-3xl);
+}
+
+.unit-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg) 0 0 0;
+  border-radius: var(--radius-2xl);
+  position: relative;
+  border-top: 1px solid rgba(255,255,255, 0.03);
+}
+
+.unit-section:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.unit-section::before {
+  content: ''; position: absolute; inset: -10px -20px; 
+  background: radial-gradient(ellipse at top, rgba(255,255,255,0.015) 0%, transparent 60%);
+  pointer-events: none; opacity: 0; transition: opacity 0.6s ease;
+  border-radius: inherit;
+}
+
+.unit-section:hover::before {
+  opacity: 1;
+}
+
+.unit-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-bottom: 0;
+  position: sticky;
+  top: 90px;
+  z-index: 10;
+  padding: 12px 0;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  mask-image: linear-gradient(to bottom, black 80%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent);
+}
+
+.unit-label {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--color-text);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.unit-divider {
+  flex-grow: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-border), transparent);
+}
+
+.pub-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-lg);
-  margin-bottom: var(--space-2xl);
 }
 
 /* ── Tarjeta de semana ── */
 @keyframes cardIn {
-  from { opacity: 0; transform: translateY(18px) scale(.98); }
+  from { opacity: 0; transform: translateY(12px) scale(.99); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
@@ -99,27 +161,51 @@
   flex-direction: column;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: all .35s var(--ease-out);
+  transition: all .4s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
   color: inherit;
   animation: cardIn .5s var(--ease-out) both;
   animation-delay: var(--card-delay, 0ms);
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.pub-week-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.04) 0%, transparent 70%);
+  opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 2;
 }
 
 /* ── Hover activo ── */
 .pub-week-card--active:hover {
-  border-color: var(--color-accent);
-  box-shadow: var(--shadow-xl);
-  transform: translateY(-6px);
+  border-color: var(--color-border-hover);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
+}
+.pub-week-card--active:hover::before {
+  opacity: 1;
+}
+.pub-week-card--active:hover .pub-week-title {
+  color: var(--color-accent);
+}
+
+.pub-week-card--active:active {
+  view-transition-name: week-hero;
 }
 
 /* ── Tarjeta vacía ── */
 .pub-week-card--empty {
-  opacity: .3;
+  opacity: .5;
   pointer-events: none;
-  filter: grayscale(.4);
+  border: 1px dashed var(--color-border-lt);
+  background: rgba(255, 255, 255, 0.01);
+  box-shadow: none;
+}
+.pub-week-card--empty .pub-week-thumb-placeholder {
+  background: transparent;
+  opacity: 0.3;
 }
 
 /* ── Imagen wrapper ── */
@@ -135,7 +221,11 @@
   object-fit: cover;
   background: var(--color-surface2);
   display: block;
-  transition: transform .5s var(--ease-out);
+  transition: transform .5s var(--ease-out), opacity .5s ease;
+  opacity: 0; /* Lazy load fade */
+}
+.pub-week-thumb.loaded {
+  opacity: 1;
 }
 
 .pub-week-card--active:hover .pub-week-thumb {
@@ -293,4 +383,30 @@
   font-weight: 700;
   text-align: center;
   margin-bottom: 0;
+}
+
+/* ══════════════════════════════════════════════════════
+   INTELLIGENCE & PROGRESS
+   ══════════════════════════════════════════════════════ */
+.read-badge {
+  color: var(--color-success, #34d399);
+  font-size: 0.9rem;
+  opacity: 0.8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ══════════════════════════════════════════════════════
+   MOBILE COMMAND PALETTE TRIGGER
+   ══════════════════════════════════════════════════════ */
+.mobile-only-search {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .mobile-only-search {
+    display: inline-flex;
+    margin-right: 8px; /* space before theme toggle */
+  }
 }

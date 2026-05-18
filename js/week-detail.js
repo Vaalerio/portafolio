@@ -32,7 +32,16 @@
       return;
     }
 
-    main.innerHTML = '<div class="week-loading"><div class="week-spinner"></div>Cargando contenido…</div>';
+    main.innerHTML = '<div class="week-loading">' +
+      '<div class="skeleton skel-title"></div>' +
+      '<div class="skeleton skel-text"></div>' +
+      '<div class="skeleton skel-text"></div>' +
+      '<div class="skeleton skel-text short"></div>' +
+      '<br>' +
+      '<div style="display:grid; gap:var(--space-md); grid-template-columns:repeat(auto-fit, minmax(200px, 1fr))">' +
+      '<div class="skeleton skel-card"></div>' +
+      '<div class="skeleton skel-card"></div>' +
+      '</div></div>';
 
     try {
       var r = await Api.getWeek(weekNum);
@@ -51,7 +60,7 @@
      RENDER PRINCIPAL
      ═══════════════════════════════════════════════════ */
 
-  function renderWeek(w, weekNum) {
+  async function renderWeek(w, weekNum) {
     var main = document.getElementById("weekContent");
     var ws = String(weekNum).padStart(2, "0");
     var h = '';
@@ -68,14 +77,14 @@
 
     // ── 2. RESUMEN (opcional) ──
     if (w.description && w.description.trim()) {
-      h += '<section class="content-section anim-fade" style="--s:' + (sIdx++) + '">';
+      h += '<section class="content-section reveal" style="--s:' + (sIdx++) + '">';
       h += '<h2 class="section-heading">Resumen de la clase</h2>';
       h += '<p>' + w.description + '</p></section>';
     }
 
     // ── 3. ACTIVIDADES ──
     if (w.activities && w.activities.length) {
-      h += '<section class="content-section anim-fade" style="--s:' + (sIdx++) + '">';
+      h += '<section class="content-section reveal" style="--s:' + (sIdx++) + '">';
       h += '<h2 class="section-heading">Actividades y Trabajos</h2>';
       w.activities.forEach(function (a) {
         h += '<div class="activity-card">';
@@ -94,7 +103,7 @@
     });
 
     docGroups.forEach(function (doc) {
-      h += '<section class="content-section anim-fade" style="--s:' + (sIdx++) + '">';
+      h += '<section class="content-section reveal" style="--s:' + (sIdx++) + '">';
       h += '<h2 class="section-heading">' + doc.title + '</h2>';
 
       // Descripción del documento
@@ -124,7 +133,7 @@
 
     // Archivos sin grupo (legacy)
     if (ungroupedFiles.length) {
-      h += '<section class="content-section anim-fade" style="--s:' + (sIdx++) + '">';
+      h += '<section class="content-section reveal" style="--s:' + (sIdx++) + '">';
       h += '<h2 class="section-heading">Archivos y Entregables</h2>';
 
       var ungroupedPdf = ungroupedFiles.find(function (f) { return f.file_type === 'pdf'; });
@@ -142,7 +151,7 @@
     // ── 5. MATERIAL VISUAL ──
     var images = assets.filter(function (a) { return a.file_type === 'image'; });
     if (images.length) {
-      h += '<section class="content-section anim-fade" style="--s:' + (sIdx++) + '">';
+      h += '<section class="content-section reveal" style="--s:' + (sIdx++) + '">';
       h += '<h2 class="section-heading">Material Visual</h2>';
       h += '<div class="image-gallery">';
       images.forEach(function (img, idx) {
@@ -158,7 +167,7 @@
 
     // ── 6. VIDEOS ──
     if (w.videos && w.videos.length) {
-      h += '<section class="content-section anim-fade" style="--s:' + (sIdx++) + '">';
+      h += '<section class="content-section reveal" style="--s:' + (sIdx++) + '">';
       h += '<h2 class="section-heading">Videos</h2>';
       w.videos.forEach(function (v) {
         var vid = ytId(v.url);
@@ -174,7 +183,7 @@
 
     // ── 7. ENLACES EXTERNOS ──
     if (w.links && w.links.length) {
-      h += '<section class="content-section anim-fade" style="--s:' + (sIdx++) + '">';
+      h += '<section class="content-section reveal" style="--s:' + (sIdx++) + '">';
       h += '<h2 class="section-heading">Enlaces de Referencia</h2>';
       h += '<div class="links-grid">';
       w.links.forEach(function (l) {
@@ -193,11 +202,53 @@
       (w.activities && w.activities.length) || (w.videos && w.videos.length) ||
       (w.links && w.links.length);
     if (!hasContent) {
-      h += '<section class="content-section"><p class="week-msg" style="font-style:italic">Esta semana aún no tiene contenido disponible.</p></section>';
+      h += '<section class="content-section reveal" style="--s:' + (sIdx++) + '">';
+      h += '<div class="empty-state-card">';
+      h += '<i class="fa-solid fa-folder-open"></i>';
+      h += '<p>Esta semana aún no tiene contenido publicado.</p>';
+      h += '</div></section>';
     }
+
 
     main.innerHTML = h;
     initLightbox();
+    trackProgress(weekNum);
+  }
+
+  function trackProgress(weekNum) {
+    if (!weekNum) return;
+    var marked = false;
+    var progressKey = 'arquitectura_read_weeks';
+    
+    // Mark immediately if page is short
+    setTimeout(function() {
+      var docHeight = document.body.scrollHeight;
+      if (docHeight <= window.innerHeight * 1.2) {
+        markAsRead(weekNum, progressKey);
+        marked = true;
+      }
+    }, 1000);
+
+    window.addEventListener('scroll', function() {
+      if (marked) return;
+      var scrollPos = window.scrollY + window.innerHeight;
+      var docHeight = document.body.scrollHeight;
+      
+      if (scrollPos > docHeight * 0.65) {
+        markAsRead(weekNum, progressKey);
+        marked = true;
+      }
+    }, { passive: true });
+  }
+
+  function markAsRead(weekNum, key) {
+    try {
+      var readWeeks = JSON.parse(localStorage.getItem(key) || '[]');
+      if (readWeeks.indexOf(weekNum) === -1) {
+        readWeeks.push(weekNum);
+        localStorage.setItem(key, JSON.stringify(readWeeks));
+      }
+    } catch(e) {}
   }
 
   /* ═══════════════════════════════════════════════════
@@ -274,6 +325,20 @@
         if (e.key === 'ArrowLeft')  lbGo(-1);
         if (e.key === 'ArrowRight') lbGo(1);
       });
+
+      // Swipe support
+      var touchStartX = 0;
+      _lbOverlay.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      
+      _lbOverlay.addEventListener('touchend', function(e) {
+        if (!_lbOverlay.classList.contains('lb-open') || _lbImages.length <= 1) return;
+        var touchEndX = e.changedTouches[0].screenX;
+        var diff = touchEndX - touchStartX;
+        if (diff > 50) lbGo(-1); // swipe right -> prev
+        else if (diff < -50) lbGo(1); // swipe left -> next
+      }, { passive: true });
     }
 
     // Bind click on each image

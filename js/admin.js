@@ -78,7 +78,8 @@ var Admin = {
   async _save() {
     if (!this._currentWeek) return;
     var btn = document.getElementById("saveBtn");
-    btn.textContent = "Guardando…"; btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Guardando…';
+    btn.disabled = true;
 
     await Api.updateWeek(this._currentWeek.id, {
       title: document.getElementById("aTitle").value.trim(),
@@ -86,10 +87,29 @@ var Admin = {
       description: document.getElementById("aDesc").value.trim()
     });
 
-    btn.textContent = "Guardar semana"; btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-check"></i> Guardado';
+    setTimeout(function() {
+      btn.textContent = "Guardar semana";
+      btn.disabled = false;
+    }, 2000);
+    
     this.renderLoadedList();
-    Portfolio.render(); // Refrescar cuadrícula del home
-    UI.toast("✓ Semana guardada");
+    Portfolio.render();
+  },
+
+  _safeDelete(id, type, el, storagePath) {
+    if (el.classList.contains("confirming")) {
+      if (type === 'activity') this._deleteActivity(id);
+      else if (type === 'video') this._deleteVideo(id);
+      else if (type === 'link') this._deleteLink(id);
+      else if (type === 'asset') this._deleteAsset(id, storagePath);
+    } else {
+      el.classList.add("confirming");
+      el.textContent = "Confirmar";
+      setTimeout(function() {
+        if(el) { el.classList.remove("confirming"); el.textContent = "✕"; }
+      }, 3000);
+    }
   },
 
   /* ═══════ PORTADA ═══════ */
@@ -113,12 +133,12 @@ var Admin = {
 
   _renderActivities(list) {
     var el = document.getElementById("activitiesList");
-    if (!list.length) { el.innerHTML = '<p class="loaded-empty">Sin actividades.</p>'; return; }
+    if (!list.length) { el.innerHTML = '<div class="loaded-empty"><i class="fa-regular fa-folder-open"></i><span>Sin actividades</span></div>'; return; }
     el.innerHTML = list.map(function (a) {
       return '<div class="loaded-item">' +
         '<div class="loaded-info"><div class="loaded-title">' + (a.title || '(sin título)') + '</div>' +
         '<div class="loaded-meta">' + (a.description || '').substring(0, 60) + '</div></div>' +
-        '<button class="loaded-del" onclick="Admin._deleteActivity(' + a.id + ')">✕</button></div>';
+        '<button class="loaded-del" onclick="Admin._safeDelete(' + a.id + ', \'activity\', this)">✕</button></div>';
     }).join("");
   },
 
@@ -133,7 +153,6 @@ var Admin = {
   },
 
   async _deleteActivity(id) {
-    if (!confirm("¿Eliminar?")) return;
     await Api.deleteActivity(id);
     await this._loadWeekIntoForm();
   },
@@ -142,11 +161,11 @@ var Admin = {
 
   _renderVideos(list) {
     var el = document.getElementById("videosList");
-    if (!list.length) { el.innerHTML = '<p class="loaded-empty">Sin videos.</p>'; return; }
+    if (!list.length) { el.innerHTML = '<div class="loaded-empty"><i class="fa-regular fa-folder-open"></i><span>Sin videos</span></div>'; return; }
     el.innerHTML = list.map(function (v) {
       return '<div class="loaded-item">' +
         '<div class="loaded-info"><div class="loaded-title">' + (v.title || v.url) + '</div></div>' +
-        '<button class="loaded-del" onclick="Admin._deleteVideo(' + v.id + ')">✕</button></div>';
+        '<button class="loaded-del" onclick="Admin._safeDelete(' + v.id + ', \'video\', this)">✕</button></div>';
     }).join("");
   },
 
@@ -161,7 +180,6 @@ var Admin = {
   },
 
   async _deleteVideo(id) {
-    if (!confirm("¿Eliminar?")) return;
     await Api.deleteVideo(id);
     await this._loadWeekIntoForm();
   },
@@ -170,12 +188,12 @@ var Admin = {
 
   _renderLinks(list) {
     var el = document.getElementById("linksList");
-    if (!list.length) { el.innerHTML = '<p class="loaded-empty">Sin enlaces.</p>'; return; }
+    if (!list.length) { el.innerHTML = '<div class="loaded-empty"><i class="fa-regular fa-folder-open"></i><span>Sin enlaces</span></div>'; return; }
     el.innerHTML = list.map(function (l) {
       return '<div class="loaded-item">' +
         '<div class="loaded-info"><div class="loaded-title">' + (l.label || l.url) + '</div>' +
         '<div class="loaded-meta">' + l.url.substring(0, 50) + '</div></div>' +
-        '<button class="loaded-del" onclick="Admin._deleteLink(' + l.id + ')">✕</button></div>';
+        '<button class="loaded-del" onclick="Admin._safeDelete(' + l.id + ', \'link\', this)">✕</button></div>';
     }).join("");
   },
 
@@ -190,7 +208,6 @@ var Admin = {
   },
 
   async _deleteLink(id) {
-    if (!confirm("¿Eliminar?")) return;
     await Api.deleteLink(id);
     await this._loadWeekIntoForm();
   },
@@ -199,14 +216,14 @@ var Admin = {
 
   _renderAssets(list) {
     var el = document.getElementById("assetsList");
-    if (!list.length) { el.innerHTML = '<p class="loaded-empty">Sin archivos.</p>'; return; }
+    if (!list.length) { el.innerHTML = '<div class="loaded-empty"><i class="fa-regular fa-folder-open"></i><span>Sin archivos</span></div>'; return; }
     el.innerHTML = list.map(function (a) {
       var label = a.file_type.toUpperCase();
       if (a.document_group) label += ' · ' + a.document_group;
       return '<div class="loaded-item">' +
         '<div class="loaded-info"><div class="loaded-title">' + (a.display_name || a.file_name) + '</div>' +
         '<div class="loaded-meta">' + label + '</div></div>' +
-        '<button class="loaded-del" onclick="Admin._deleteAsset(' + a.id + ',\'' + (a.storage_path || '').replace(/'/g, "\\'") + '\')">✕</button></div>';
+        '<button class="loaded-del" onclick="Admin._safeDelete(' + a.id + ', \'asset\', this, \'' + (a.storage_path || '').replace(/'/g, "\\'") + '\')">✕</button></div>';
     }).join("");
   },
 
@@ -263,7 +280,6 @@ var Admin = {
   },
 
   async _deleteAsset(id, storagePath) {
-    if (!confirm("¿Eliminar este archivo?")) return;
     await Api.deleteAsset(id, storagePath);
     await this._loadWeekIntoForm();
   },
@@ -299,5 +315,22 @@ var Admin = {
     document.getElementById("addLinkBtn").addEventListener("click", function () { s._addLink(); });
     document.getElementById("uploadBtn").addEventListener("click", function () { s._uploadAsset(); });
     document.getElementById("coverUploadBtn").addEventListener("click", function () { s._uploadCover(); });
+
+    var previewBtn = document.getElementById("previewBtnTop");
+    if (previewBtn) {
+      previewBtn.addEventListener("click", function () {
+        var w = document.getElementById("aWeek").value;
+        if (w) window.open("semanas/semana-" + w + ".html", "_blank");
+      });
+    }
+
+    // Accordion headers
+    document.querySelectorAll(".admin-subsection-header").forEach(function(header) {
+      header.addEventListener("click", function(e) {
+        if (e.target.tagName === "BUTTON") return; // Ignorar si click en botón agregar
+        var card = header.closest(".admin-card");
+        if (card) card.classList.toggle("is-collapsed");
+      });
+    });
   }
 };
