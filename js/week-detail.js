@@ -151,9 +151,21 @@
     // ── 5. MATERIAL VISUAL ──
     var images = assets.filter(function (a) { return a.file_type === 'image'; });
     if (images.length) {
+      window._currentGalleryImages = images; // Save for sorting
       h += '<section class="content-section reveal" style="--s:' + (sIdx++) + '">';
-      h += '<h2 class="section-heading">Material Visual</h2>';
-      h += '<div class="image-gallery">';
+      h += '<div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:var(--space-md);">';
+      h += '<h2 class="section-heading" style="margin-bottom:0;">Material Visual</h2>';
+      
+      h += '<div class="sort-controls">';
+      h += '<select id="gallerySort" class="field-input" style="width:auto; padding:6px 12px; font-size:0.85rem; border-radius:var(--radius-sm); cursor:pointer;" onchange="window.sortGallery(this.value)">';
+      h += '<option value="default">Orden original</option>';
+      h += '<option value="recent">Agregado últimamente</option>';
+      h += '<option value="alpha">Alfabéticamente</option>';
+      h += '<option value="numeric">Numéricamente</option>';
+      h += '</select>';
+      h += '</div></div>';
+
+      h += '<div class="image-gallery" id="imageGalleryContainer">';
       images.forEach(function (img, idx) {
         h += '<figure class="gallery-figure">';
         h += '<img src="' + resolveUrl(img.storage_path) + '" alt="' + (img.display_name || img.file_name) + '" loading="lazy" data-gallery-index="' + idx + '" style="cursor:pointer">';
@@ -250,6 +262,47 @@
       }
     } catch(e) {}
   }
+
+  window.sortGallery = function(sortType) {
+    if (!window._currentGalleryImages) return;
+    var container = document.getElementById("imageGalleryContainer");
+    if (!container) return;
+    
+    var sorted = window._currentGalleryImages.slice();
+    if (sortType === 'alpha') {
+      sorted.sort(function(a, b) {
+        var nameA = (a.display_name || a.file_name || "").toLowerCase();
+        var nameB = (b.display_name || b.file_name || "").toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+    } else if (sortType === 'numeric') {
+      sorted.sort(function(a, b) {
+        var nameA = (a.display_name || a.file_name || "");
+        var nameB = (b.display_name || b.file_name || "");
+        return nameA.localeCompare(nameB, undefined, { numeric: true, sensitivity: 'base' });
+      });
+    } else if (sortType === 'recent') {
+      sorted.sort(function(a, b) {
+        var dA = new Date(a.created_at || 0).getTime();
+        var dB = new Date(b.created_at || 0).getTime();
+        if (dA === dB) return b.id - a.id;
+        return dB - dA; // Descending
+      });
+    }
+    
+    var h = '';
+    sorted.forEach(function (img, idx) {
+      h += '<figure class="gallery-figure" style="animation: fade-in 0.4s ease forwards;">';
+      h += '<img src="' + resolveUrl(img.storage_path) + '" alt="' + (img.display_name || img.file_name) + '" loading="lazy" data-gallery-index="' + idx + '" style="cursor:pointer">';
+      if (img.description) {
+        h += '<figcaption class="gallery-caption">' + img.description + '</figcaption>';
+      }
+      h += '</figure>';
+    });
+    
+    container.innerHTML = h;
+    initLightbox();
+  };
 
   /* ═══════════════════════════════════════════════════
      HELPERS
